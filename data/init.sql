@@ -35,6 +35,7 @@ CREATE TABLE "transaction" (
  "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
  "portfolio_id" INTEGER NOT NULL REFERENCES "portfolio"("id"),
  "asset_id" INTEGER NOT NULL REFERENCES "asset_list"("id"),
+ "portfolio_asset_id" INTEGER NOT NULL REFERENCES "portfolio_asset"("id"),
  "purchase_datetime" timestamptz NOT NULL,
  "sell_datetime" timestamptz NOT NULL,
  "asset_price" decimal (7,2) NOT NULL,
@@ -46,7 +47,6 @@ CREATE TABLE "transaction" (
 );
 CREATE TABLE "portfolio_asset" (
   "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "asset_id" INTEGER NOT NULL REFERENCES "asset_list"("id"),
   "portfolio_id" INTEGER NOT NULL REFERENCES "portfolio"("id"),
   "symbol" TEXT NOT NULL,
   "name" TEXT NOT NULL,
