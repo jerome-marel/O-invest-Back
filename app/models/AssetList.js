@@ -6,11 +6,6 @@ class AssetList extends Model {}
 
 AssetList.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     symbol: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -25,8 +20,6 @@ AssetList.init(
     sequelize,
     modelName: 'AssetList',
     tableName: 'asset_list',
-    createdAt: 'created_at', // evite le camelCase de Sequelize.
-    updatedAt: 'updated_at', // idem.
   },
 );
 

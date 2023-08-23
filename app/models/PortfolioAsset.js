@@ -5,27 +5,6 @@ class PortfolioAsset extends Model {}
 
 PortfolioAsset.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    asset_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'AssetList', //  reference a AssetList model
-        key: 'id',
-      },
-    },
-    portfolio_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Portfolio', //  reference à Portfolio model
-        key: 'id',
-      },
-    },
     symbol: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -47,8 +26,6 @@ PortfolioAsset.init(
     sequelize,
     modelName: 'PortfolioAsset',
     tableName: 'portfolio_asset',
-    createdAt: 'created_at', // evite le camelCase de Sequelize.
-    updatedAt: 'updated_at', // idem.
   },
 );
 
