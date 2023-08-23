@@ -2,46 +2,32 @@ import { DataTypes, Model } from 'sequelize';
 
 import sequelize from '../../database.js';
 
-class User extends Model {}
+class AssetList extends Model {}
 
-User.init(
+AssetList.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    first_name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    last_name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    email: {
+    symbol: {
       type: DataTypes.TEXT,
       allowNull: false,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
     },
-    password: {
+    name: {
       type: DataTypes.TEXT,
       allowNull: false,
-    },
-    risk_profile: {
-      type: DataTypes.TEXT,
     },
   },
   {
     sequelize,
-    modelName: 'User',
-    tableName: 'user',
+    modelName: 'AssetList',
+    tableName: 'asset_list',
     createdAt: 'created_at', // evite le camelCase de Sequelize.
     updatedAt: 'updated_at', // idem.
   },
 );
 
-export default User;
+export default AssetList;
