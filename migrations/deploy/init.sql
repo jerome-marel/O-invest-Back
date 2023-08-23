@@ -1,7 +1,4 @@
--- Deploy o-invest:init to pg
-
 BEGIN;
-
 DROP TABLE IF EXISTS "user",
 "portfolio",
 "transaction",
@@ -34,10 +31,21 @@ CREATE TABLE "asset_list" (
  "updated_at" TIMESTAMPTZ,
  CONSTRAINT "unique_symbol" UNIQUE ("symbol")
 );
+CREATE TABLE "portfolio_asset" (
+  "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "portfolio_id" INTEGER NOT NULL REFERENCES "portfolio"("id"),
+  "symbol" TEXT NOT NULL,
+  "name" TEXT NOT NULL,
+  "remaining_quantity" decimal (9,2) NOT NULL,
+  "historic_price" decimal (7,2) NOT NULL,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMPTZ
+);
 CREATE TABLE "transaction" (
  "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
  "portfolio_id" INTEGER NOT NULL REFERENCES "portfolio"("id"),
  "asset_id" INTEGER NOT NULL REFERENCES "asset_list"("id"),
+ "portfolio_asset_id" INTEGER NOT NULL REFERENCES "portfolio_asset"("id"),
  "purchase_datetime" timestamptz NOT NULL,
  "sell_datetime" timestamptz NOT NULL,
  "asset_price" decimal (7,2) NOT NULL,
@@ -47,15 +55,5 @@ CREATE TABLE "transaction" (
  "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
  "updated_at" TIMESTAMPTZ
 );
-CREATE TABLE "portfolio_asset" (
-  "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "asset_id" INTEGER NOT NULL REFERENCES "asset_list"("id"),
-  "portfolio_id" INTEGER NOT NULL REFERENCES "portfolio"("id"),
-  "symbol" TEXT NOT NULL,
-  "name" TEXT NOT NULL,
-  "remaining_quantity" decimal (9,2) NOT NULL,
-  "historic_price" decimal (7,2) NOT NULL,
-  "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "updated_at" TIMESTAMPTZ
-);
+
 COMMIT;
