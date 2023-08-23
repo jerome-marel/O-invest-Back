@@ -1,5 +1,5 @@
 import express from 'express';
-
+import authController from '../controllers/authController.js';
 import { errorHandler } from '../middlewares/error.middleware.js';
 
 const router = express.Router();
@@ -7,6 +7,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.send('BUENOS DIAAAAAAAS CA FONCTIONNNNNNNNNNNE');
 });
+
+router.post('/register', authController.register);
 
 router.use(errorHandler);
 

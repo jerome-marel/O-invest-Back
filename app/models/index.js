@@ -67,3 +67,7 @@ PortfolioAsset.hasMany(Transaction, {
   as: 'transactionsInPortfolioAsset',
   foreignKey: 'portfolio_asset_id',
 });
+
+export default {
+  User, Portfolio, Transaction, AssetList, PortfolioAsset,
+};
