@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize(process.env.PG_URL, {
   define: {
@@ -6,4 +6,4 @@ const sequelize = new Sequelize(process.env.PG_URL, {
   },
 });
 
-module.exports = sequelize;
+export default sequelize;
