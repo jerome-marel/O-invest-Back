@@ -2,7 +2,7 @@
 import express from 'express';
 import cors from 'cors'; // MW qui active cors
 
-// import router from './router/index.js'; // Importation des routes de l'application.
+import router from './router/index.js'; // Importation des routes de l'application.
 
 const app = express(); // Init de l'app Express.
 
@@ -16,6 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors(process.env.CORS_DOMAINS ?? 'localhost'));
 
 // Utilisation des routes définies dans le router importé.
-// app.use(router);
+app.use(router);
 
 export default app; // Exporter l'instance app pour d'autres fichier comme server.js.
