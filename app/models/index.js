@@ -41,6 +41,7 @@ Portfolio.hasMany(PortfolioAsset, {
 PortfolioAsset.belongsTo(Portfolio, {
   as: 'portfolio',
   foreignKey: 'portfolio_id',
+});
 
 // association entre transaction et asset list
 // une transaction porte sur un seule asset
