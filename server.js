@@ -1,4 +1,5 @@
 import { createServer } from 'http';
+import './app/utils/env.load.js';
 import app from './app/app.js';
 
 const PORT = process.env.PORT ?? 3000;
