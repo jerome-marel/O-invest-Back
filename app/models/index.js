@@ -1,5 +1,8 @@
 import Transaction from './Transaction.js';
 import Portfolio from './Portfolio.js';
+import User from './User.js';
+import AssetList from './AssetList.js';
+import PortfolioAsset from './PortfolioAsset.js';
 
 // association entre portfolio et transaction
 // un portfolio peut avoir plusieurs transactions
@@ -14,4 +17,29 @@ Portfolio.hasMany(Transaction, {
 Transaction.belongsTo(Portfolio, {
   as: 'portfolio', // à partir de Transaction, je veux le portfolio concerné
   foreignKey: 'portfolio_id',
+});
+
+// association entre transaction et asset list
+// une transaction porte sur un seule asset
+
+Transaction.belongsTo(AssetList, {
+  as: 'asset', // à partir de Transaction, je veux récupérer l'asset concerné
+  foreignKey: 'asset_id',
+});
+
+AssetList.hasMany(Transaction, {
+  as: 'transactions',
+  foreignKey: 'asset_id',
+});
+
+// association entre Transaction et PortfolioAsset
+
+Transaction.belongsTo(PortfolioAsset, {
+  as: 'portfolioAsset', // à partir de transaction je veux récuprer l'asset en portefeuille
+  foreignKey: 'portfolio_asset_id',
+});
+
+PortfolioAsset.hasMany(Transaction, {
+  as: 'transactionsInPortfolioAsset',
+  foreignKey: 'portfolio_asset_id',
 });

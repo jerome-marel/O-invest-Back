@@ -2,6 +2,10 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP TABLE "user";
+DROP TABLE "portfolio";
+DROP TABLE "transaction";
+DROP TABLE "asset_list";
+DROP TABLE "portfolio_asset";
 
 COMMIT;
