@@ -19,6 +19,29 @@ Transaction.belongsTo(Portfolio, {
   foreignKey: 'portfolio_id',
 });
 
+// user & portfolio associations
+User.hasMany(Portfolio, {
+  as: 'userPortfolios', // depuis User, je veux ses portfolios.
+  foreignKey: 'user_id',
+});
+
+Portfolio.belongsTo(User, {
+  as: 'user', // depuis Portfolio, je souhaite recuperer l'user
+  foreignKey: 'user_id',
+});
+
+// Portfolio & PortfolioAsset association
+
+Portfolio.hasMany(PortfolioAsset, {
+  as: 'assetsInPortfolio',
+  foreignKey: 'portfolio_id',
+
+});
+
+PortfolioAsset.belongsTo(Portfolio, {
+  as: 'portfolio',
+  foreignKey: 'portfolio_id',
+
 // association entre transaction et asset list
 // une transaction porte sur un seule asset
 

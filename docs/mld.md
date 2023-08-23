@@ -6,7 +6,7 @@ RÉALISER, 0N PORTFOLIO, 11 TRANSACTION
 TRANSACTION: id, portfolio_id, asset_id, purchase_datetime, sell_datetime, asset_price, quantity, total_transacted, note, created_at, updated_at
 
 EST COMPOSE, 0N PORTFOLIO, 11 PORTFOLIO_ASSET
-PORTFOLIO_ASSET: id, asset_id, portfolio_id, symbol, name, remaining_quantity, historic_price, created_at, updated_at
+PORTFOLIO_ASSET: id, transaction_id, portfolio_id, symbol, name, remaining_quantity, historic_price, created_at, updated_at
 
 CHOISIT, 11 TRANSACTION, 0N ASSET_LIST
 ASSET_LIST: id, symbol, name, created_at, updated_at
