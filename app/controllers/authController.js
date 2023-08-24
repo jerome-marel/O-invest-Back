@@ -1,4 +1,5 @@
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 import '../utils/env.load.js';
 import validateEmail from '../utils/authValidation/emailValidator.js';
@@ -9,8 +10,6 @@ import encrpyt from '../utils/authValidation/encrypt.js';
 const authController = {
 
   register: async (req, res) => {
-    // const secretToken = process.env.TOKEN_SECRET;
-
     const {
       firstName,
       lastName,
@@ -52,17 +51,40 @@ const authController = {
       await User.create(newUser);
       return res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
-      console.error('Error during registration:', err);
       return res.status(500).json({ error: 'Internal server error' });
     }
   },
 
-  // login: async (req, res) => {
+  login: async (req, res) => {
+    const { email, password } = req.body;
 
-  // const token = jwt.sign({ user: user.email }, secretToken, { expiresIn: '1h' });
-  // return res.status(201).json({ message: 'User registered successfully', token });
+    if (!validateEmail(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
 
-  // },
+    try {
+      const foundUser = await User.findOne({
+        where: { email },
+        attributes: { exclude: ['created_at', 'updated_at'] },
+      });
+
+      if (!foundUser) {
+        return res.status(401).json({ error: 'EMAIL or password incorrect' });
+      }
+
+      const validPassword = await bcrypt.compare(password, foundUser.password);
+      if (!validPassword) {
+        return res.status(401).json({ error: 'Email or PASSWORD incorrect' });
+      }
+
+      const secretToken = process.env.TOKEN_SECRET;
+      const token = jwt.sign({ email }, secretToken, { expiresIn: '1h' });
+
+      return res.status(201).json({ message: "User connected successfully to O'Invest", token });
+    } catch (err) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  },
 };
 
 export default authController;

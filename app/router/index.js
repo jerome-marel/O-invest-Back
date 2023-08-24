@@ -12,7 +12,7 @@ router.get('/', (_, res) => {
 router.post('/register', authController.register);
 
 // Route pour login
-// router.post('/login', authController.login);
+router.post('/login', authController.login);
 
 router.use(errorHandler);
 
