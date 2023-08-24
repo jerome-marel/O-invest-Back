@@ -14,7 +14,7 @@ Portfolio.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    total_invested: {
+    totalInvested: {
       type:
         DataTypes.DECIMAL(9, 2),
       allowNull: true,

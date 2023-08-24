@@ -2,10 +2,10 @@
 
 BEGIN;
 
-DROP TABLE "user";
+DROP TABLE "transaction" CASCADE;
+DROP TABLE "portfolio_asset" CASCADE;
 DROP TABLE "portfolio";
-DROP TABLE "transaction";
 DROP TABLE "asset_list";
-DROP TABLE "portfolio_asset";
+DROP TABLE "user";
 
 COMMIT;

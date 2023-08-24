@@ -6,11 +6,11 @@ class Transaction extends Model {}
 
 Transaction.init(
   {
-    purchase_datetime: {
+    purchaseDatetime: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    sell_datetime: {
+    sellDatetime: {
       type: DataTypes.DATE,
       allowNull: true,
     },
@@ -18,7 +18,7 @@ Transaction.init(
       type: DataTypes.DECIMAL(7, 2),
       allowNull: false,
     },
-    total_transacted: {
+    totalTransacted: {
       type: DataTypes.DECIMAL(9, 2),
       allowNull: false,
     },
