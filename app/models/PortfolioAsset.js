@@ -13,11 +13,11 @@ PortfolioAsset.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    remaining_quantity: {
+    remainingQuantity: {
       type: DataTypes.DECIMAL(9, 2),
       allowNull: false,
     },
-    historic_price: {
+    historicPrice: {
       type: DataTypes.DECIMAL(7, 2),
       allowNull: false,
     },

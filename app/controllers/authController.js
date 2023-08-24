@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import '../utils/env.load.js';
+import validateEmail from '../utils/emailValidator.js';
+import validateName from '../utils/nameValidator.js';
 
 const authController = {
   register: async (req, res) => {
@@ -12,6 +14,14 @@ const authController = {
 
     if (!email || !password || !firstName || !lastName || !riskProfile) {
       return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    if (!validateName(firstName) || !validateName(lastName)) {
+      return res.status(400).json({ error: 'First name and last name can only be letters' });
+    }
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
     }
 
     try {
