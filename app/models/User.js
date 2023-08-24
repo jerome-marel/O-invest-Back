@@ -6,11 +6,11 @@ class User extends Model {}
 
 User.init(
   {
-    first_name: {
+    firstName: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    last_name: {
+    lastName: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -26,7 +26,7 @@ User.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    risk_profile: {
+    riskProfile: {
       type: DataTypes.TEXT,
     },
   },
