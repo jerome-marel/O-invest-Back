@@ -23,6 +23,7 @@ Transaction.belongsTo(Portfolio, {
 User.hasMany(Portfolio, {
   as: 'userPortfolios', // depuis User, je veux ses portfolios.
   foreignKey: 'user_id',
+  onDelete: 'CASCADE',
 });
 
 Portfolio.belongsTo(User, {
@@ -35,7 +36,7 @@ Portfolio.belongsTo(User, {
 Portfolio.hasMany(PortfolioAsset, {
   as: 'assetsInPortfolio',
   foreignKey: 'portfolio_id',
-
+  onDelete: 'CASCADE',
 });
 
 PortfolioAsset.belongsTo(Portfolio, {
@@ -61,6 +62,7 @@ AssetList.hasMany(Transaction, {
 Transaction.belongsTo(PortfolioAsset, {
   as: 'portfolioAsset', // à partir de transaction je veux récuprer l'asset en portefeuille
   foreignKey: 'portfolio_asset_id',
+  onDelete: 'CASCADE',
 });
 
 PortfolioAsset.hasMany(Transaction, {
