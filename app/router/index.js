@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
   res.send('BUENOS DIAAAAAAAS CA FONCTIONNNNNNNNNNNE');
 });
 
+// Route pour créer un user
 router.post('/register', authController.register);
 
 router.use(errorHandler);
