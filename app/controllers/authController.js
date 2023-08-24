@@ -72,6 +72,8 @@ const authController = {
         return res.status(401).json({ error: 'EMAIL or password incorrect' });
       }
 
+      // bcrypt compares
+
       const validPassword = await bcrypt.compare(password, foundUser.password);
       if (!validPassword) {
         return res.status(401).json({ error: 'Email or PASSWORD incorrect' });
