@@ -7,5 +7,5 @@ export default function generateRandomHex(length) {
 // on peut se servir de cette fonction dans les autres files pour générer une clé aléatoire:
 
 // import { generateRandomHex } from './randomGenerator.js';
-// const randomHex = generateRandomHex(length);
+// const randomHex = generateRandomHex(64);
 // console.log(randomHex);
