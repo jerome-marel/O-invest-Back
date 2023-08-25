@@ -6,6 +6,18 @@ class Transaction extends Model {}
 
 Transaction.init(
   {
+    portfolioId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    assetId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    portfolioAssetId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     purchaseDatetime: {
       type: DataTypes.DATE,
       allowNull: false,

@@ -81,9 +81,16 @@ const authController = {
 
       const secretToken = process.env.TOKEN_SECRET;
       const token = jwt.sign({ email }, secretToken, { expiresIn: '1h' });
-      console.log(req.body);
 
       return res.status(201).json({ message: "User connected successfully to O'Invest", token });
+    } catch (err) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  },
+
+  logout: async (req, res) => {
+    try {
+      return res.status(200).json({ message: 'User logged out successfully' });
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error' });
     }
