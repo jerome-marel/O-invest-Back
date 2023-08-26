@@ -5,6 +5,10 @@ class PortfolioAsset extends Model {}
 
 PortfolioAsset.init(
   {
+    portfolioId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     symbol: {
       type: DataTypes.TEXT,
       allowNull: false,

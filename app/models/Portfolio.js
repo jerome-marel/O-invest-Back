@@ -10,6 +10,10 @@ Portfolio.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     strategy: {
       type: DataTypes.TEXT,
       allowNull: false,

@@ -16,7 +16,7 @@ const userController = {
       }
       res.json(foundUser);
     } catch (err) {
-      console.error('Error getting user', err);
+      // console.error('Error getting user', err);
       return res.status(500).json({ error: 'Internal server error' });
     }
     return null;
@@ -37,7 +37,7 @@ const userController = {
       await foundUser.update(updatedData);
       return res.status(200).json({ message: 'Profile updated successfully', foundUser });
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       res.status(500).json({ error: 'Internal server error' });
     }
     return null;
@@ -52,7 +52,7 @@ const userController = {
       await foundUser.destroy();
       res.status(200).json({ message: 'Profile deleted' });
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       res.status(500).json({ error: 'Internal server error' });
     }
     return null;
