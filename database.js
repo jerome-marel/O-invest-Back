@@ -8,4 +8,13 @@ const sequelize = new Sequelize(process.env.PG_URL, {
   dialect: process.env.DIALECT,
 });
 
+// Test DB connection
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connected successfully.');
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
+
 export default sequelize;

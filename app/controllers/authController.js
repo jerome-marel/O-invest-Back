@@ -51,6 +51,7 @@ const authController = {
       await User.create(newUser);
       return res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ error: 'Internal server error' });
     }
   },
