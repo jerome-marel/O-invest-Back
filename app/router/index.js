@@ -15,7 +15,6 @@ router.get('/', (_, res) => {
 // Route pour l'authentification
 router.post('/register', authController.register);
 router.post('/login', authController.login);
-router.post('/logout', authController.logout);
 
 // Routes pour le portfolio
 router.get('/dashboard', dashboardController.welcomeUser);
@@ -23,6 +22,9 @@ router.post('/dashboard', tokenMiddleware, portfolioController.createPortfolio);
 
 // Routes pour la liste des assets
 router.get('/dashboard/allassets', assetController.getAllAssets);
+
+// Route pour ajouter asset à un portfolio
+router.post('/portfolio/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 
 router.use(errorHandler);
 

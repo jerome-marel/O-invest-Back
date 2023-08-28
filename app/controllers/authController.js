@@ -51,7 +51,6 @@ const authController = {
       await User.create(newUser);
       return res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ error: 'Internal server error' });
     }
   },
@@ -81,28 +80,17 @@ const authController = {
       }
 
       const secretToken = process.env.TOKEN_SECRET;
-      const token = jwt.sign({ email }, secretToken, { expiresIn: '1h' });
-
+      const token = jwt.sign({ user: foundUser }, secretToken, { expiresIn: '1h' });
       return res.status(201).json({
-        token,
         message: "User connected successfully to O'Invest",
-        user: {
-          firstName: foundUser.firstName,
-          lastName: foundUser.lastName,
-        },
+        token,
+        user: foundUser.id, // Ajoutez l'ID de l'utilisateur ici
       });
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error' });
     }
   },
 
-  logout: async (req, res) => {
-    try {
-      return res.status(200).json({ message: 'User logged out successfully' });
-    } catch (err) {
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-  },
 };
 
 export default authController;
