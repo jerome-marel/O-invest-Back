@@ -1,6 +1,8 @@
 import Portfolio from '../models/Portfolio.js';
 
+/*
 const portfolioController = {
+
   createPortfolio: async (req, res) => {
     const {
       name,
@@ -21,10 +23,10 @@ const portfolioController = {
       res.status(500).json({ error: 'Error creating new portfolio' });
     } return null;
   },
+  */
 
-  // cette method ne fonctionne pas encore car le token n'est pas stocké côté front
+// cette method ne fonctionne pas encore car le token n'est pas stocké côté front
 
-  /*
 const portfolioController = {
   createPortfolio: async (req, res) => {
     const { name, strategy } = req.body;
@@ -34,7 +36,7 @@ const portfolioController = {
       const newPortfolio = await Portfolio.create({
         name,
         strategy,
-        user_id: userId,
+        userId,
       });
 
       return res.status(200).json({ message: 'New portfolio successfully added', newPortfolio });
@@ -42,7 +44,6 @@ const portfolioController = {
       return res.status(500).json({ error: 'Error creating new portfolio' });
     }
   },
-  */
 
 };
 
