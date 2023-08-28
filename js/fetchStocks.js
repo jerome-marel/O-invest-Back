@@ -1,15 +1,16 @@
 import axios from 'axios';
+import '../app/utils/env.load.js';
 
 import pkg from 'pg';
 
 const { Client } = pkg;
 
 const dbParams = {
-  user: 'oinvest',
-  password: 'oinvest',
-  host: 'localhost',
-  port: '5432',
-  database: 'oinvest',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
 };
 
 const stockListUrl = 'https://api.twelvedata.com/stocks?country=us&exchange=nasdaq&type=common-stock&mic_code=xngs';
