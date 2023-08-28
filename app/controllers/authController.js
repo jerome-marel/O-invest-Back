@@ -83,7 +83,14 @@ const authController = {
       const secretToken = process.env.TOKEN_SECRET;
       const token = jwt.sign({ email }, secretToken, { expiresIn: '1h' });
 
-      return res.status(201).json({ message: "User connected successfully to O'Invest", token });
+      return res.status(201).json({
+        token,
+        message: "User connected successfully to O'Invest",
+        user: {
+          firstName: foundUser.firstName,
+          lastName: foundUser.lastName,
+        },
+      });
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error' });
     }
