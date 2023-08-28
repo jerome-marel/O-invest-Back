@@ -89,13 +89,6 @@ const authController = {
     }
   },
 
-  logout: async (req, res) => {
-    try {
-      return res.status(200).json({ message: 'User logged out successfully' });
-    } catch (err) {
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-  },
 };
 
 export default authController;
