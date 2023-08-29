@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AssetList from '../models/AssetList.js';
 // import User from '../models/User.js';
-// import Portfolio from '../models/Portfolio.js';
+import Portfolio from '../models/Portfolio.js';
 import PortfolioAsset from '../models/PortfolioAsset.js';
 import Transaction from '../models/Transaction.js';
 
@@ -23,6 +23,8 @@ const assetController = {
   },
 
   addAssetToPortfolio: async (req, res) => {
+    const userId = req.user.id;
+    const portfolioId = req.params.id;
     const {
       symbol, purchaseDatetime, quantity, note,
     } = req.body;
@@ -36,8 +38,13 @@ const assetController = {
         return res.status(404).json({ error: 'Asset not found' });
       }
 
-      const userId = req.user.id;
-      const portfolioId = req.params.id;
+      const userPortfolio = await Portfolio.findOne({
+        where: { id: portfolioId, user_id: userId },
+      });
+
+      if (!userPortfolio) {
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
+      }
 
       const apiKey = process.env.TWELVEDATA_API_KEY;
       const realTimeURL = `https://api.twelvedata.com/price?symbol=${asset.symbol}&apikey=${apiKey}`;
