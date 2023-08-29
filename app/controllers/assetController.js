@@ -28,7 +28,6 @@ const assetController = {
     } = req.body;
 
     try {
-      // Retrieve the asset information based on the provided assetId
       const asset = await AssetList.findOne({
         where: { symbol },
       });
@@ -37,8 +36,7 @@ const assetController = {
         return res.status(404).json({ error: 'Asset not found' });
       }
 
-      // Assuming you have a logged-in user and can get the user's ID
-      const userId = req.user.id; // Replace with how you retrieve user ID
+      const userId = req.user.id;
       const portfolioId = req.params.id;
 
       const apiKey = process.env.TWELVEDATA_API_KEY;

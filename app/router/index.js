@@ -13,14 +13,15 @@ router.get('/', (_, res) => {
 });
 
 // Route pour l'authentification
-router.post('/register', authController.register);
-router.post('/login', authController.login);
+router.post('/api/register', authController.register);
+router.post('/api/login', authController.login);
 
 // Routes pour le portfolio
 router.get('/dashboard', dashboardController.welcomeUser);
 router.post('/dashboard/portfolio', tokenMiddleware, portfolioController.createPortfolio);
 router.get('/dashboard/allportfolio', tokenMiddleware, portfolioController.getAllPortfolios);
 router.get('/dashboard/portfolio/:id', tokenMiddleware, portfolioController.getOnePortfolio);
+router.get('/dashboard/portfolio/:id/roi', tokenMiddleware, portfolioController.getROI);
 
 // Routes pour la liste des assets
 router.get('/dashboard/allassets', assetController.getAllAssets);
