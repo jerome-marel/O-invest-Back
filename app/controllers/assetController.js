@@ -1,8 +1,9 @@
-// import axios from 'axios';
+import axios from 'axios';
 import AssetList from '../models/AssetList.js';
 // import User from '../models/User.js';
 // import Portfolio from '../models/Portfolio.js';
-// import PortfolioAsset from '../models/PortfolioAsset.js';
+import PortfolioAsset from '../models/PortfolioAsset.js';
+import Transaction from '../models/Transaction.js';
 
 const assetController = {
   getAllAssets: async (req, res) => {
@@ -21,73 +22,81 @@ const assetController = {
     }
   },
 
-  // addAssetToPortfolio: async (req, res) => {
-  //   const {
-  //     assetId, purchaseDatetime, quantity,
-  //   } = req.body;
+  addAssetToPortfolio: async (req, res) => {
+    const {
+      symbol, purchaseDatetime, quantity, note,
+    } = req.body;
 
-  //   try {
-  //     // Retrieve the asset information based on the provided assetId
-  //     const asset = await AssetList.findByPk(assetId);
+    try {
+      // Retrieve the asset information based on the provided assetId
+      const asset = await AssetList.findOne({
+        where: { symbol },
+      });
 
-  //     if (!asset) {
-  //       return res.status(404).json({ error: 'Asset not found' });
-  //     }
+      if (!asset) {
+        return res.status(404).json({ error: 'Asset not found' });
+      }
 
-  //     // Assuming you have a logged-in user and can get the user's ID
-  //     const userId = req.user.id; // Replace with how you retrieve user ID
-  //     const portfolioId = req.params.id;
+      // Assuming you have a logged-in user and can get the user's ID
+      const userId = req.user.id; // Replace with how you retrieve user ID
+      const portfolioId = req.params.id;
 
-  //     const apiKey = process.env.TWELVEDATA_API_KEY;
-  //     const realTimeURL = `https://api.twelvedata.com/price?symbol=${asset.symbol}&apikey=${apiKey}`;
-  //     const resCurrentPrice = await axios.get(realTimeURL);
-  //     const currentPriceData = parseFloat(resCurrentPrice.data.price);
+      const apiKey = process.env.TWELVEDATA_API_KEY;
+      const realTimeURL = `https://api.twelvedata.com/price?symbol=${asset.symbol}&apikey=${apiKey}`;
+      const resCurrentPrice = await axios.get(realTimeURL);
+      const currentPriceData = parseFloat(resCurrentPrice.data.price);
 
-  //     // Create a new portfolio asset entry
-  //     const newPortfolioAsset = await PortfolioAsset.create({
-  //       userId,
-  //       assetId,
-  //       purchaseDatetime,
-  //       remainingQuantity: quantity,
-  //       name: asset.name,
-  //       symbol: asset.symbol,
-  //       portfolioId,
-  //       historicPrice: currentPriceData,
-  //     });
+      // Create a new portfolio asset entry
+      const newPortfolioAsset = await PortfolioAsset.create({
+        userId,
+        purchaseDatetime,
+        remainingQuantity: quantity,
+        name: asset.name,
+        symbol: asset.symbol,
+        portfolioId,
+        historicPrice: currentPriceData,
+      });
 
-  //     // Format purchaseDatetime to match API format
-  //     const apiFormattedDate = purchaseDatetime.replace(' ', '%20').replace(':', '%3A');
+      const apiFormattedDate = purchaseDatetime.replace(' ', '%20').replace(':', '%3A');
 
-  //     // Construct the API request URL
-  //     const apiUrl = `https://api.twelvedata.com/time_series?apikey=${apiKey}&interval=1min&symbol=${asset.symbol}&start_date=${apiFormattedDate}&end_date=${apiFormattedDate}&format=JSON`;
-  //     console.log(apiUrl);
-  //     // Make the API request to Twelve Data
-  //     const response = await axios.get(apiUrl);
-  //     const priceData = response.data.values[0].open;
-  //     console.log(priceData);
+      const apiUrl = `https://api.twelvedata.com/time_series?apikey=${apiKey}&interval=1min&symbol=${asset.symbol}&start_date=${apiFormattedDate}&end_date=${apiFormattedDate}&format=JSON`;
+      const response = await axios.get(apiUrl);
+      const priceData = response.data.values[0].open;
 
-  //     // Calculate the total value of the purchase
-  //     const purchaseValue = priceData * quantity;
+      const purchaseValue = priceData * quantity;
 
-  //     return res.status(201).json({
-  //       message: 'Asset added to portfolio successfully',
-  //       portfolioAsset: {
-  //         id: newPortfolioAsset.id,
-  //         asset: {
-  //           id: asset.id,
-  //           symbol: asset.symbol,
-  //           name: asset.name,
-  //         },
-  //         purchaseDatetime,
-  //         quantity,
-  //         purchaseValue,
-  //       },
-  //     });
-  //   } catch (err) {
-  //     console.error(err);
-  //     return res.status(500).json({ error: 'Error adding asset to portfolio' });
-  //   }
-  // },
+      // Add transaction history
+      const newTransaction = await Transaction.create({
+        assetId: asset.id,
+        userId,
+        portfolioId,
+        portfolioAssetId: newPortfolioAsset.id,
+        purchaseDatetime,
+        assetPrice: priceData,
+        quantity,
+        totalTransacted: purchaseValue,
+        note,
+      });
+
+      return res.status(201).json({
+        message: 'Asset added to portfolio successfully',
+        portfolioAsset: {
+          id: newPortfolioAsset.id,
+          asset: {
+            symbol: asset.symbol,
+            name: asset.name,
+          },
+          purchaseDatetime,
+          quantity,
+          purchaseValue,
+        },
+        newTransaction,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: 'Error adding asset to portfolio' });
+    }
+  },
 };
 
 export default assetController;
