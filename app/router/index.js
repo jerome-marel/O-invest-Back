@@ -16,18 +16,18 @@ router.get('/', (_, res) => {
 router.post('/api/register', authController.register);
 router.post('/api/login', authController.login);
 
-// Routes pour le portfolio
-router.get('/dashboard', dashboardController.welcomeUser);
-router.post('/dashboard/portfolio', tokenMiddleware, portfolioController.createPortfolio);
-router.get('/dashboard/allportfolio', tokenMiddleware, portfolioController.getAllPortfolios);
-router.get('/dashboard/portfolio/:id', tokenMiddleware, portfolioController.getOnePortfolio);
-router.get('/dashboard/portfolio/:id/roi', tokenMiddleware, portfolioController.getROI);
+// Routes pour l'accueil
+router.get('/api/', dashboardController.welcomeUser);
+router.post('/api/portfolio', tokenMiddleware, portfolioController.createPortfolio);
+router.get('/api/allportfolio', tokenMiddleware, portfolioController.getAllPortfolios);
+router.get('/api/portfolio/:id', tokenMiddleware, portfolioController.getOnePortfolio);
+router.get('/api/portfolio/:id/roi', tokenMiddleware, portfolioController.getROI);
 
 // Routes pour la liste des assets
-router.get('/dashboard/allassets', assetController.getAllAssets);
+router.get('/api/allassets', assetController.getAllAssets);
 
 // Route pour ajouter asset à un portfolio
-router.post('/portfolio/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
+router.post('/api/portfolio/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 
 router.use(errorHandler);
 
