@@ -1,7 +1,7 @@
 import express from 'express';
 import assetController from '../controllers/assetController.js';
 import authController from '../controllers/authController.js';
-import dashboardController from '../controllers/dashboardController.js';
+// import dashboardController from '../controllers/dashboardController.js';
 import portfolioController from '../controllers/portfolioController.js';
 import { errorHandler } from '../middlewares/error.middleware.js';
 import tokenMiddleware from '../utils/authValidation/tokenMiddleware.js';
@@ -17,14 +17,14 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 // Routes pour le portfolio
-router.get('/dashboard', dashboardController.welcomeUser);
-router.post('/dashboard', tokenMiddleware, portfolioController.createPortfolio);
+// router.get('/dashboard', dashboardController.welcomeUser);
+router.post('/dashboard/portfolio/:id', tokenMiddleware, portfolioController.createPortfolio);
 
 // Routes pour la liste des assets
-router.get('/dashboard/allassets', assetController.getAllAssets);
+router.get('/api/allassets', assetController.getAllAssets);
 
 // Route pour ajouter asset à un portfolio
-router.post('/portfolio/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
+// router.post('/portfolio/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 
 router.use(errorHandler);
 
