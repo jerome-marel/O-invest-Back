@@ -47,7 +47,7 @@ CREATE TABLE "transaction" (
  "asset_id" INTEGER NOT NULL REFERENCES "asset_list"("id"),
  "portfolio_asset_id" INTEGER NOT NULL REFERENCES "portfolio_asset"("id"),
  "purchase_datetime" timestamptz NOT NULL,
- "sell_datetime" timestamptz NOT NULL,
+ "sell_datetime" timestamptz,
  "asset_price" decimal (7,2) NOT NULL,
  "quantity" INTEGER NOT NULL,
  "total_transacted" decimal (9,2) NOT NULL,

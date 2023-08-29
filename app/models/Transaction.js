@@ -26,6 +26,10 @@ Transaction.init(
       type: DataTypes.DATE,
       allowNull: true,
     },
+    assetPrice: {
+      type: DataTypes.DECIMAL(7, 2),
+      allowNull: false,
+    },
     quantity: {
       type: DataTypes.DECIMAL(7, 2),
       allowNull: false,
