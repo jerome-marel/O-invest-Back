@@ -30,7 +30,6 @@ router.get('/api/assets', assetController.getAllAssets);
 // Route pour ajouter asset à un portfolio
 router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 
-
 // Routes pour la liste des assets
 router.get('/api/assets', assetController.getAllAssets);
 
