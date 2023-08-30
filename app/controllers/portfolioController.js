@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Portfolio from '../models/Portfolio.js';
 import PortfolioAsset from '../models/PortfolioAsset.js';
-// import Transaction from '../models/Transaction.js';
+import Transaction from '../models/Transaction.js';
 // import PortfolioAsset from '../models/PortfolioAsset.js';
 
 const portfolioController = {
@@ -57,9 +57,23 @@ const portfolioController = {
       if (!portfolio) {
         return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
       }
+      const portfolioAssetToDelete = await PortfolioAsset.findAll({
+        where: { portfolio_id: portfolioId },
+      });
+
+      await Transaction.destroy({
+        where: { portfolio_asset_id: portfolioAssetToDelete },
+      });
+
+      // Delete related portfolio assets first
+      await PortfolioAsset.destroy({
+        where: { portfolio_id: portfolioId },
+      });
+
       await portfolio.destroy();
       return res.status(200).json({ message: 'Portfolio deleted successfully' });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ error: 'Error deleting portfolio' });
     }
   },
@@ -98,7 +112,9 @@ const portfolioController = {
         where: { portfolio_id: portfolioId },
       });
 
-      return res.status(200).json({ message: 'Successfully retrieved portfolio', portfolio, userPortfolioAssets });
+      return res.status(200).json({
+        message: 'Successfully retrieved portfolio', portfolio, userPortfolioAssets,
+      });
     } catch (err) {
       return res.status(500).json({ error: 'Error in retrieving portfolio, please try again later' });
     }
