@@ -1,7 +1,10 @@
+// import axios from 'axios';
 import Portfolio from '../models/Portfolio.js';
 import Transaction from '../models/Transaction.js';
+// import PortfolioAsset from '../models/PortfolioAsset.js';
 
 const portfolioController = {
+
   createPortfolio: async (req, res) => {
     const { name, strategy } = req.body;
     const userId = req.user.id; // permets de passer par le middleware et vérifier le token
@@ -76,9 +79,17 @@ const portfolioController = {
   },
 
   getOnePortfolio: async (req, res) => {
-    const { id } = req.params;
+    const userId = req.user.id;
+    const portfolioId = req.params.id;
     try {
-      const portfolio = await Portfolio.findByPk(id);
+      const userPortfolio = await Portfolio.findOne({
+        where: { id: portfolioId, user_id: userId },
+      });
+
+      if (!userPortfolio) {
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
+      }
+      const portfolio = await Portfolio.findByPk(portfolioId);
       if (!portfolio) {
         return res.status(404).json({ error: 'Invalid portfolio id entered - portfolio does not exist' });
       }
@@ -100,16 +111,38 @@ const portfolioController = {
       if (!userPortfolio) {
         return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
       }
-      const roi = await Transaction.findAll({
+      const roiData = await Transaction.findAll({
         where: { portfolioId },
       });
-      if (!roi) {
+      if (!roiData) {
         return res.status(404).json({ error: 'No transactions found, please add asset to your portfolio' });
       }
       // eslint-disable-next-line max-len
-      const totalTransactedSum = roi.reduce((sum, transaction) => sum + parseFloat(transaction.totalTransacted), 0);
+      const totalTransactedSum = roiData.reduce((sum, transaction) => sum + parseFloat(transaction.totalTransacted), 0);
+
+      // const allPortfolioAssets = await PortfolioAsset.findAll({
+      //   where: { portfolio_id: portfolioId },
+      // });
+      // const uniqueSymbolSet = new Set(allPortfolioAssets.map((asset) => asset.symbol));
+      // const uniqueSymbolArray = [...uniqueSymbolSet];
+
+      // console.log(uniqueSymbolArray);
+
+      // const apiKey = process.env.TWELVEDATA_API_KEY;
+      // const symbolList = uniqueSymbolArray.join(',');
+      // const realTimeURL = `https://api.twelvedata.com/price?symbol=${symbolList}&apikey=${apiKey}`;
+
+      // try {
+      //   const resCurrentPrice = await axios.get(realTimeURL);
+      //   const currentPriceData = resCurrentPrice.data;
+      //   console.log(currentPriceData);
+      // } catch (error) {
+      //   console.error('Error fetching current price data:', error);
+      // }
+
       return res.status(200).json({
-        message: 'Found all transactions', roi, userId, totalTransactedSum,
+        // à ajouter : allPortfolioAsset
+        message: 'Found all transactions', roiData, userId, totalTransactedSum,
       });
     } catch (err) {
       return res.status(500).json({ error: 'Error, could not display ROI' });

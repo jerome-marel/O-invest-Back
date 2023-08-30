@@ -38,6 +38,7 @@ const assetController = {
       if (!userPortfolio) {
         return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
       }
+
       const apiKey = process.env.TWELVEDATA_API_KEY;
       const realTimeURL = `https://api.twelvedata.com/price?symbol=${asset.symbol}&apikey=${apiKey}`;
       const resCurrentPrice = await axios.get(realTimeURL);

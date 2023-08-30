@@ -14,6 +14,7 @@ router.get('/', (_, res) => {
 // Route pour l'authentification
 router.post('/api/register', authController.register);
 router.post('/api/login', authController.login);
+
 // Routes pour l'accueil
 router.get('/api/', dashboardController.welcomeUser);
 router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfolio);
@@ -28,5 +29,13 @@ router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.delete
 router.get('/api/assets', assetController.getAllAssets);
 // Route pour ajouter asset à un portfolio
 router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
+
+
+// Routes pour la liste des assets
+router.get('/api/assets', assetController.getAllAssets);
+
+// Route pour ajouter asset à un portfolio
+router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
+
 router.use(errorHandler);
 export default router;

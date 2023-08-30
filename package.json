@@ -8,6 +8,7 @@
     "start": "nodemon server.js",
     "db:deploy": "sqitch deploy; node ./js/updateStocks.js",
     "db:reset": "sqitch revert -y; npm run db:deploy",
+    "db:front": "psql -U oinvest -d oinvest",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
   },
   "repository": {
