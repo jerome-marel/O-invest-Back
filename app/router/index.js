@@ -11,24 +11,30 @@ const router = express.Router();
 router.get('/', (_, res) => {
   res.send('BUENOS DIAAAAAAAS CA FONCTIONNNNNNNNNNNE');
 });
-
 // Route pour l'authentification
 router.post('/api/register', authController.register);
 router.post('/api/login', authController.login);
-
-// Routes pour le portfolio
-router.get('/dashboard', dashboardController.welcomeUser);
-router.post('/dashboard/portfolio', tokenMiddleware, portfolioController.createPortfolio);
-router.get('/dashboard/allportfolio', tokenMiddleware, portfolioController.getAllPortfolios);
-router.get('/dashboard/portfolio/:id', tokenMiddleware, portfolioController.getOnePortfolio);
-router.get('/dashboard/portfolio/:id/roi', tokenMiddleware, portfolioController.getROI);
+// Routes pour l'accueil
+router.get('/api/', dashboardController.welcomeUser);
+router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfolio);
+router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
+router.get('/api/portfolios/:id', tokenMiddleware, portfolioController.getOnePortfolio);
+router.get('/api/portfolios/:id/roi', tokenMiddleware, portfolioController.getROI);
+// Routes CRUD:
+router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePortfolio);
+router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
 
 // Routes pour la liste des assets
-router.get('/dashboard/allassets', assetController.getAllAssets);
-
+router.get('/api/assets', assetController.getAllAssets);
 // Route pour ajouter asset à un portfolio
-router.post('/portfolio/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
-
+router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 router.use(errorHandler);
-
 export default router;
+///////////////
+const userPortfolio = await Portfolio.findOne({
+  where: { id: portfolioId, user_id: userId },
+});
+
+if (!userPortfolio) {
+  return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
+}
