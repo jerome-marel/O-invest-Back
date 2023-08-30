@@ -19,7 +19,7 @@ CREATE TABLE "portfolio" (
   "user_id" INTEGER NOT NULL REFERENCES "user"("id"),
   "name" TEXT NOT NULL,
   "strategy" TEXT NOT NULL,
-  "total_invested" DECIMAL (9,2),
+  "total_invested" DECIMAL (9,2) DEFAULT 0,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updated_at" TIMESTAMPTZ
 );

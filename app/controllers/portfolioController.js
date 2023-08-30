@@ -1,5 +1,6 @@
 // import axios from 'axios';
 import Portfolio from '../models/Portfolio.js';
+import PortfolioAsset from '../models/PortfolioAsset.js';
 import Transaction from '../models/Transaction.js';
 // import PortfolioAsset from '../models/PortfolioAsset.js';
 
@@ -93,7 +94,11 @@ const portfolioController = {
       if (!portfolio) {
         return res.status(404).json({ error: 'Invalid portfolio id entered - portfolio does not exist' });
       }
-      return res.status(200).json({ message: 'Successfully retrieved portfolio', portfolio });
+      const userPortfolioAssets = await PortfolioAsset.findAll({
+        where: { portfolio_id: portfolioId },
+      });
+
+      return res.status(200).json({ message: 'Successfully retrieved portfolio', portfolio, userPortfolioAssets });
     } catch (err) {
       return res.status(500).json({ error: 'Error in retrieving portfolio, please try again later' });
     }
