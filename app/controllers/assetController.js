@@ -56,8 +56,27 @@ const assetController = {
       const apiFormattedDate = purchaseDatetime.replace(' ', '%20').replace(':', '%3A');
       const apiUrl = `https://api.twelvedata.com/time_series?apikey=${apiKey}&interval=1min&symbol=${asset.symbol}&start_date=${apiFormattedDate}&end_date=${apiFormattedDate}&format=JSON`;
       const response = await axios.get(apiUrl);
-      const priceData = response.data.values[0].open;
-      const purchaseValue = priceData * quantity;
+      const priceData = parseFloat(response.data.values[0].open);
+
+      const purchaseValue = priceData * parseFloat(quantity);
+
+      // Update the totalInvested field in the Portfolio table
+      const updateUserPortfolio = await Portfolio.findOne({
+        where: { id: portfolioId, user_id: userId },
+      });
+
+      if (!updateUserPortfolio) {
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
+      }
+
+      // eslint-disable-next-line max-len
+      const updatedTotalInvested = parseFloat(userPortfolio.totalInvested) + parseFloat(purchaseValue);
+
+      await Portfolio.update(
+        { totalInvested: updatedTotalInvested },
+        { where: { id: portfolioId } }, // Update only the specific portfolio
+      );
+
       // Add transaction history
       const newTransaction = await Transaction.create({
         assetId: asset.id,
