@@ -30,11 +30,3 @@ router.get('/api/assets', assetController.getAllAssets);
 router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 router.use(errorHandler);
 export default router;
-///////////////
-const userPortfolio = await Portfolio.findOne({
-  where: { id: portfolioId, user_id: userId },
-});
-
-if (!userPortfolio) {
-  return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
-}

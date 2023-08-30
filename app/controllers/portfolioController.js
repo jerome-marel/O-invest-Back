@@ -22,19 +22,13 @@ const portfolioController = {
     const { name, strategy } = req.body;
     const portfolioId = req.params.id;
     const userId = req.user.id;
-    const userPortfolio = await Portfolio.findOne({
-      where: { id: portfolioId, user_id: userId },
-    });
 
-    if (!userPortfolio) {
-      return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
-    }
     try {
       const portfolio = await Portfolio.findOne({
         where: { id: portfolioId, userId },
       });
       if (!portfolio) {
-        return res.status(404).json({ error: 'Portfolio not found or unauthorized' });
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
       }
 
       portfolio.name = name || portfolio.name;
@@ -57,7 +51,7 @@ const portfolioController = {
         where: { id: portfolioId, userId },
       });
       if (!portfolio) {
-        return res.status(404).json({ error: 'Portfolio not found or unauthorized' });
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
       }
       await portfolio.destroy();
       return res.status(200).json({ message: 'Portfolio deleted successfully' });
