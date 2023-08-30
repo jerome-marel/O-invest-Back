@@ -20,6 +20,48 @@ const portfolioController = {
       return res.status(500).json({ error: 'Error creating new portfolio' });
     }
   },
+  // update a portfolio
+  updatePortfolio: async (req, res) => {
+    const { name, strategy } = req.body;
+    const portfolioId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+      const portfolio = await Portfolio.findOne({
+        where: { id: portfolioId, userId },
+      });
+      if (!portfolio) {
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
+      }
+
+      portfolio.name = name || portfolio.name;
+      portfolio.strategy = strategy || portfolio.strategy;
+      await portfolio.save();
+
+      return res.status(200).json({ message: 'Portfolio updated successfully', portfolio });
+    } catch (err) {
+      return res.status(500).json({ error: 'Error updating portfolio' });
+    }
+  },
+
+  // delete portfolio
+  deletePortfolio: async (req, res) => {
+    const portfolioId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+      const portfolio = await Portfolio.findOne({
+        where: { id: portfolioId, userId },
+      });
+      if (!portfolio) {
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
+      }
+      await portfolio.destroy();
+      return res.status(200).json({ message: 'Portfolio deleted successfully' });
+    } catch (err) {
+      return res.status(500).json({ error: 'Error deleting portfolio' });
+    }
+  },
 
   getAllPortfolios: async (req, res) => {
     const userId = req.user.id;
