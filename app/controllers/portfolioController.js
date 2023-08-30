@@ -78,6 +78,10 @@ const portfolioController = {
       // eslint-disable-next-line max-len
       const totalTransactedSum = roiData.reduce((sum, transaction) => sum + parseFloat(transaction.totalTransacted), 0);
 
+      const updateTotalInvested = await Portfolio.update({
+        totalInvested: totalTransactedSum,
+      });
+
       // const allPortfolioAssets = await PortfolioAsset.findAll({
       //   where: { portfolio_id: portfolioId },
       // });
@@ -100,7 +104,7 @@ const portfolioController = {
 
       return res.status(200).json({
         // à ajouter : allPortfolioAsset
-        message: 'Found all transactions', roiData, userId, totalTransactedSum,
+        message: 'Found all transactions', roiData, userId, totalTransactedSum, updateTotalInvested,
       });
     } catch (err) {
       return res.status(500).json({ error: 'Error, could not display ROI' });
