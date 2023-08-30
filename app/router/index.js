@@ -18,16 +18,16 @@ router.post('/api/login', authController.login);
 
 // Routes pour l'accueil
 router.get('/api/', dashboardController.welcomeUser);
-router.post('/api/portfolio', tokenMiddleware, portfolioController.createPortfolio);
-router.get('/api/allportfolio', tokenMiddleware, portfolioController.getAllPortfolios);
-router.get('/api/portfolio/:id', tokenMiddleware, portfolioController.getOnePortfolio);
-router.get('/api/portfolio/:id/roi', tokenMiddleware, portfolioController.getROI);
+router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfolio);
+router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
+router.get('/api/portfolios/:id', tokenMiddleware, portfolioController.getOnePortfolio);
+router.get('/api/portfolios/:id/roi', tokenMiddleware, portfolioController.getROI);
 
 // Routes pour la liste des assets
-router.get('/api/allassets', assetController.getAllAssets);
+router.get('/api/assets', assetController.getAllAssets);
 
 // Route pour ajouter asset à un portfolio
-router.post('/api/portfolio/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
+router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 
 router.use(errorHandler);
 
