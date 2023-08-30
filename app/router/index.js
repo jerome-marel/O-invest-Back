@@ -11,7 +11,6 @@ const router = express.Router();
 router.get('/', (_, res) => {
   res.send('BUENOS DIAAAAAAAS CA FONCTIONNNNNNNNNNNE');
 });
-
 // Route pour l'authentification
 router.post('/api/register', authController.register);
 router.post('/api/login', authController.login);
@@ -22,6 +21,15 @@ router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfo
 router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
 router.get('/api/portfolios/:id', tokenMiddleware, portfolioController.getOnePortfolio);
 router.get('/api/portfolios/:id/roi', tokenMiddleware, portfolioController.getROI);
+// Routes CRUD:
+router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePortfolio);
+router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
+
+// Routes pour la liste des assets
+router.get('/api/assets', assetController.getAllAssets);
+// Route pour ajouter asset à un portfolio
+router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
+
 
 // Routes pour la liste des assets
 router.get('/api/assets', assetController.getAllAssets);
@@ -30,5 +38,4 @@ router.get('/api/assets', assetController.getAllAssets);
 router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 
 router.use(errorHandler);
-
 export default router;
