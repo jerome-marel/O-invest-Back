@@ -19,8 +19,8 @@ router.post('/api/login', authController.login);
 router.get('/api/', dashboardController.welcomeUser);
 router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfolio);
 router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
-router.get('/api/portfolios/:id', tokenMiddleware, portfolioController.getOnePortfolio);
-router.get('/api/portfolios/:id/roi', tokenMiddleware, portfolioController.getROI);
+router.get('/api/portfolios/:id', tokenMiddleware, portfolioController.getOnePortfolioStats);
+// router.get('/api/portfolios/:id/roi', tokenMiddleware, portfolioController.getROI);
 // Routes CRUD:
 router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePortfolio);
 router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
