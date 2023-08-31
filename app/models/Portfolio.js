@@ -26,6 +26,7 @@ Portfolio.init(
   },
   {
     sequelize,
+    modelName: 'Portfolio',
     tableName: 'portfolio',
   },
 );
