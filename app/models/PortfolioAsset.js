@@ -19,7 +19,7 @@ PortfolioAsset.init(
     },
     remainingQuantity: {
       type: DataTypes.DECIMAL(9, 2),
-      allowNull: false,
+      allowNull: true,
     },
     historicPrice: {
       type: DataTypes.DECIMAL(7, 2),

@@ -20,7 +20,7 @@ Portfolio.init(
     },
     totalInvested: {
       type:
-        DataTypes.DECIMAL(9, 2),
+      DataTypes.DECIMAL(9, 2),
       allowNull: true,
     },
   },

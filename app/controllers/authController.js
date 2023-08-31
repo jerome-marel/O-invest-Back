@@ -80,7 +80,7 @@ const authController = {
       }
 
       const secretToken = process.env.TOKEN_SECRET;
-      const token = jwt.sign({ user: foundUser }, secretToken, { expiresIn: '1h' });
+      const token = jwt.sign({ user: foundUser }, secretToken, { expiresIn: '8h' });
       return res.status(201).json({
         message: "User connected successfully to O'Invest",
         token,

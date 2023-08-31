@@ -6,6 +6,8 @@ import Transaction from '../models/Transaction.js';
 
 const portfolioController = {
 
+  // START CREATE PORTFOLIO
+
   createPortfolio: async (req, res) => {
     const { name, strategy } = req.body;
     const userId = req.user.id; // permets de passer par le middleware et vérifier le token
@@ -21,7 +23,11 @@ const portfolioController = {
       return res.status(500).json({ error: 'Error creating new portfolio' });
     }
   },
-  // update a portfolio
+
+  // END CREATE PORTFOLIO
+
+  // START UPDATE PORTFOLIO (NOT CHECKED)
+
   updatePortfolio: async (req, res) => {
     const { name, strategy } = req.body;
     const portfolioId = req.params.id;
@@ -45,7 +51,10 @@ const portfolioController = {
     }
   },
 
-  // delete portfolio
+  // END UPDATE PORTFOLIO (NOT CHECKED)
+
+  // START DELETE PORTFOLIO (NOT WORKING)
+
   deletePortfolio: async (req, res) => {
     const portfolioId = req.params.id;
     const userId = req.user.id;
@@ -78,6 +87,10 @@ const portfolioController = {
     }
   },
 
+  // END DELETE PORTFOLIO (NOT WORKING)
+
+  // START GET ALL PORTFOLIOS
+
   getAllPortfolios: async (req, res) => {
     const userId = req.user.id;
     try {
@@ -93,10 +106,17 @@ const portfolioController = {
     }
   },
 
-  getOnePortfolio: async (req, res) => {
+  // END GET ALL PORTFOLIOS
+
+  // START GET ONE PORTFOLIO (STATS HERE)
+
+  getOnePortfolioStats: async (req, res) => {
     const userId = req.user.id;
     const portfolioId = req.params.id;
+
     try {
+      // METHOD TO SHOW PORTFOLIO (name, strategy, totalInvested)
+
       const userPortfolio = await Portfolio.findOne({
         where: { id: portfolioId, user_id: userId },
       });
@@ -104,100 +124,78 @@ const portfolioController = {
       if (!userPortfolio) {
         return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
       }
+
       const portfolio = await Portfolio.findByPk(portfolioId);
       if (!portfolio) {
         return res.status(404).json({ error: 'Invalid portfolio id entered - portfolio does not exist' });
       }
+
+      // METHOD TO SHOW PORTFOLIO_ASSETS (symbol, name, remainingQuantity, historicPrice)
+
       const userPortfolioAssets = await PortfolioAsset.findAll({
         where: { portfolio_id: portfolioId },
       });
 
-      return res.status(200).json({
-        message: 'Successfully retrieved portfolio', portfolio, userPortfolioAssets,
-      });
-    } catch (err) {
-      return res.status(500).json({ error: 'Error in retrieving portfolio, please try again later' });
-    }
-  },
-
-  getROI: async (req, res) => {
-    const userId = req.user.id;
-    const portfolioId = req.params.id;
-
-    try {
-      const userPortfolio = await Portfolio.findOne({
-        where: { id: portfolioId, user_id: userId },
-      });
-
-      if (!userPortfolio) {
-        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
-      }
+      // METHOD TO GET REAL TIME PRICE OF ASSETS IN PORTFOLIO
 
       const totalInvestedForROI = userPortfolio.totalInvested;
 
+      const uniqueSymbolSet = new Set(userPortfolioAssets.map((asset) => asset.symbol));
+      const uniqueSymbolArray = [...uniqueSymbolSet];
+
+      const apiKey = process.env.TWELVEDATA_API_KEY;
+      const symbolList = uniqueSymbolArray.join(',');
+      const realTimeURL = `https://api.twelvedata.com/price?symbol=${symbolList}&apikey=${apiKey}&dp=2`;
+
       try {
-        const userPortfolioAssets = await PortfolioAsset.findAll({
-          where: { portfolio_id: portfolioId },
-        });
-        const uniqueSymbolSet = new Set(userPortfolioAssets.map((asset) => asset.symbol));
-        const uniqueSymbolArray = [...uniqueSymbolSet];
+        const resCurrentPrice = await axios.get(realTimeURL);
+        const currentPriceData = resCurrentPrice.data;
 
-        const apiKey = process.env.TWELVEDATA_API_KEY;
-        const symbolList = uniqueSymbolArray.join(',');
-        const realTimeURL = `https://api.twelvedata.com/price?symbol=${symbolList}&apikey=${apiKey}`;
+        let portfolioValuation = 0;
 
-        try {
-          const resCurrentPrice = await axios.get(realTimeURL);
-          const currentPriceData = resCurrentPrice.data;
-
-          let portfolioValuation = 0;
-
-          if (currentPriceData.price) {
-            // Single asset case
-            const singleAssetPrice = parseFloat(currentPriceData.price);
-            portfolioValuation = singleAssetPrice * userPortfolioAssets[0].remainingQuantity;
-          } else {
-            // Multiple assets case
-            userPortfolioAssets.forEach((asset) => {
-              const { symbol, remainingQuantity } = asset;
-              if (currentPriceData[symbol] && currentPriceData[symbol].price) {
-                const currentPrice = parseFloat(currentPriceData[symbol].price);
-                portfolioValuation += currentPrice * remainingQuantity;
-              }
-            });
-          }
-
-          portfolioValuation = Number(portfolioValuation.toFixed(2));
-
-          // eslint-disable-next-line max-len
-          let portfolioROIPercent = ((portfolioValuation - totalInvestedForROI) / totalInvestedForROI) * 100;
-
-          portfolioROIPercent = Number(portfolioROIPercent.toFixed(2));
-
-          const profitAndLoss = (Number(portfolioValuation) - Number(totalInvestedForROI));
-
-          return res.status(200).json({
-            message: 'Found all transactions',
-            userId,
-            totalInvestedForROI,
-            uniqueSymbolArray,
-            currentPriceData,
-            portfolioValuation,
-            portfolioROIPercent,
-            profitAndLoss,
+        if (currentPriceData.price) {
+          // Single asset case
+          const singleAssetPrice = parseFloat(currentPriceData.price);
+          portfolioValuation = singleAssetPrice * userPortfolioAssets[0].remainingQuantity;
+        } else {
+          // Multiple assets case
+          userPortfolioAssets.forEach((asset) => {
+            const { symbol, remainingQuantity } = asset;
+            if (currentPriceData[symbol] && currentPriceData[symbol].price) {
+              const currentPrice = parseFloat(currentPriceData[symbol].price);
+              portfolioValuation += currentPrice * remainingQuantity;
+            }
           });
-        } catch (priceError) {
-          console.log(priceError);
-          return res.status(500).json({ error: 'Error fetching current price data' });
         }
-      } catch (portfolioAssetsError) {
-        return res.status(500).json({ error: 'Error fetching portfolio assets' });
+
+        portfolioValuation = Number(portfolioValuation);
+
+        // eslint-disable-next-line max-len
+        let portfolioROIPercent = ((portfolioValuation - totalInvestedForROI) / totalInvestedForROI) * 100;
+        portfolioROIPercent = Number(portfolioROIPercent.toFixed(2));
+
+        const profitAndLoss = Number(portfolioValuation - totalInvestedForROI);
+
+        return res.status(200).json({
+          message: 'Found all transactions',
+          portfolio,
+          userPortfolioAssets,
+          totalInvestedForROI,
+          uniqueSymbolArray,
+          currentPriceData,
+          portfolioValuation,
+          portfolioROIPercent,
+          profitAndLoss,
+        });
+      } catch (priceError) {
+        console.log(priceError);
+        return res.status(500).json({ error: 'Error fetching current price data' });
       }
-    } catch (portfolioError) {
-      return res.status(500).json({ error: 'Error fetching user portfolio' });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: 'Error fetching portfolio data' });
     }
   },
-
 };
 
 export default portfolioController;

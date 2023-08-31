@@ -37,7 +37,7 @@ CREATE TABLE "portfolio_asset" (
   "portfolio_id" INTEGER NOT NULL REFERENCES "portfolio"("id"),
   "symbol" TEXT NOT NULL,
   "name" TEXT NOT NULL,
-  "remaining_quantity" decimal (9,2) NOT NULL,
+  "remaining_quantity" DECIMAL (9,2) DEFAULT 0,
   "historic_price" decimal (7,2) NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updated_at" TIMESTAMPTZ
