@@ -15,6 +15,10 @@ AssetList.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    sector: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   },
   {
     sequelize,
