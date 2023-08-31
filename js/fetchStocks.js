@@ -13,7 +13,7 @@ const dbParams = {
   database: process.env.DB_DATABASE,
 };
 
-const stockListUrl = 'https://api.twelvedata.com/stocks?country=us&exchange=nasdaq&type=common-stock&mic_code=xngs';
+const stockListUrl = 'https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=471fa8c65e322f88f37e9dd48bd3766c';
 
 export async function fetchAndUpdateStocks() {
   const client = new Client(dbParams);
@@ -21,17 +21,18 @@ export async function fetchAndUpdateStocks() {
 
   try {
     const response = await axios.get(stockListUrl);
-    const stocks = response.data.data;
+    const stocks = response.data;
 
     for (const stock of stocks) {
       const { symbol } = stock;
       const { name } = stock;
+      const { sector } = stock;
 
-      const query = 'INSERT INTO asset_list (symbol, name) VALUES ($1, $2) ON CONFLICT (symbol) DO NOTHING';
-      await client.query(query, [symbol, name]);
+      const query = 'INSERT INTO asset_list (symbol, name, sector) VALUES ($1, $2, $3) ON CONFLICT (symbol) DO NOTHING';
+      await client.query(query, [symbol, name, sector]);
     }
 
-    console.log('BDD mise à jour!!!!!!!');
+    console.log('******** Nasdaq Assets Updated ********');
   } catch (error) {
     console.error('Error:', error);
   } finally {
