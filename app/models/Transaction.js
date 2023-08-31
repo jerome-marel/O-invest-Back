@@ -46,6 +46,7 @@ Transaction.init(
   },
   {
     sequelize,
+    modelName: 'Transaction',
     tableName: 'transaction',
   },
 );

@@ -20,6 +20,10 @@ router.get('/api/', dashboardController.welcomeUser);
 router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfolio);
 router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
 router.get('/api/portfolios/:id', tokenMiddleware, portfolioController.getOnePortfolioStats);
+
+// GET AVERAGE
+router.get('/api/portfolios/:id/avg', tokenMiddleware, portfolioController.averagePurchasePrice);
+
 // router.get('/api/portfolios/:id/roi', tokenMiddleware, portfolioController.getROI);
 // Routes CRUD:
 router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePortfolio);

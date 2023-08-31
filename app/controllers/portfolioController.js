@@ -1,8 +1,7 @@
-import axios from 'axios';
 import Portfolio from '../models/Portfolio.js';
 import PortfolioAsset from '../models/PortfolioAsset.js';
 import Transaction from '../models/Transaction.js';
-// import PortfolioAsset from '../models/PortfolioAsset.js';
+import AssetList from '../models/AssetList.js';
 
 const portfolioController = {
 
@@ -136,29 +135,26 @@ const portfolioController = {
         where: { portfolio_id: portfolioId },
       });
 
-      // METHOD TO GET REAL TIME PRICE OF ASSETS IN PORTFOLIO
-
       const totalInvestedForROI = userPortfolio.totalInvested;
 
-      const uniqueSymbolSet = new Set(userPortfolioAssets.map((asset) => asset.symbol));
-      const uniqueSymbolArray = [...uniqueSymbolSet];
+      const currentPriceData = {};
 
-      const apiKey = process.env.TWELVEDATA_API_KEY;
-      const symbolList = uniqueSymbolArray.join(',');
-      const realTimeURL = `https://api.twelvedata.com/price?symbol=${symbolList}&apikey=${apiKey}&dp=2`;
+      userPortfolioAssets.forEach((asset) => {
+        const { symbol } = asset;
+        const historicPrice = parseFloat(asset.historicPrice);
+
+        currentPriceData[symbol] = {
+          price: historicPrice.toFixed(2), // Format to 2 decimal places
+        };
+      });
 
       try {
-        const resCurrentPrice = await axios.get(realTimeURL);
-        const currentPriceData = resCurrentPrice.data;
-
         let portfolioValuation = 0;
 
         if (currentPriceData.price) {
-          // Single asset case
           const singleAssetPrice = parseFloat(currentPriceData.price);
           portfolioValuation = singleAssetPrice * userPortfolioAssets[0].remainingQuantity;
         } else {
-          // Multiple assets case
           userPortfolioAssets.forEach((asset) => {
             const { symbol, remainingQuantity } = asset;
             if (currentPriceData[symbol] && currentPriceData[symbol].price) {
@@ -168,24 +164,26 @@ const portfolioController = {
           });
         }
 
-        portfolioValuation = Number(portfolioValuation);
+        portfolioValuation = Number(portfolioValuation.toFixed(2));
 
         // eslint-disable-next-line max-len
-        let portfolioROIPercent = ((portfolioValuation - totalInvestedForROI) / totalInvestedForROI) * 100;
+        let portfolioROIPercent = 0;
+        // eslint-disable-next-line max-len
+        portfolioROIPercent = ((portfolioValuation - totalInvestedForROI) / totalInvestedForROI) * 100;
         portfolioROIPercent = Number(portfolioROIPercent.toFixed(2));
 
         const profitAndLoss = Number(portfolioValuation - totalInvestedForROI);
+        const profitAndLossRounded = parseFloat(profitAndLoss.toFixed(2));
 
         return res.status(200).json({
           message: 'Found all transactions',
           portfolio,
           userPortfolioAssets,
           totalInvestedForROI,
-          uniqueSymbolArray,
           currentPriceData,
           portfolioValuation,
           portfolioROIPercent,
-          profitAndLoss,
+          profitAndLossRounded,
         });
       } catch (priceError) {
         console.log(priceError);
@@ -196,6 +194,55 @@ const portfolioController = {
       return res.status(500).json({ error: 'Error fetching portfolio data' });
     }
   },
+
+  averagePurchasePrice: async (req, res) => {
+    const portfolioId = req.params.id;
+
+    try {
+      const transactions = await Transaction.findAll({
+        where: { portfolioId },
+        include: {
+          model: AssetList,
+          as: 'asset',
+          attributes: ['symbol'],
+        },
+      });
+
+      const averagePrices = {};
+
+      transactions.forEach((transaction) => {
+        const { asset, assetPrice } = transaction;
+        const { symbol } = asset;
+
+        const purchasePrice = parseFloat(assetPrice);
+
+        if (averagePrices[symbol]) {
+          averagePrices[symbol].totalPrice += purchasePrice;
+          averagePrices[symbol].count += 1;
+        } else {
+          averagePrices[symbol] = {
+            totalPrice: purchasePrice,
+            count: 1,
+          };
+        }
+      });
+
+      // Calculate average and format the result using Object.keys
+      Object.keys(averagePrices).forEach((symbol) => {
+        const { totalPrice, count } = averagePrices[symbol];
+        averagePrices[symbol] = totalPrice / count;
+      });
+
+      return res.status(200).json({
+        message: 'Average purchase prices calculated successfully',
+        averagePrices,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: 'Error calculating average purchase prices' });
+    }
+  },
+
 };
 
 export default portfolioController;

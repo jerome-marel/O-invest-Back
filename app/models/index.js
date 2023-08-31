@@ -31,19 +31,6 @@ Portfolio.belongsTo(User, {
   foreignKey: 'user_id',
 });
 
-// Portfolio & PortfolioAsset association
-
-Portfolio.hasMany(PortfolioAsset, {
-  as: 'assetsInPortfolio',
-  foreignKey: 'portfolio_id',
-  onDelete: 'CASCADE',
-});
-
-PortfolioAsset.belongsTo(Portfolio, {
-  as: 'portfolio',
-  foreignKey: 'portfolio_id',
-});
-
 // association entre transaction et asset list
 // une transaction porte sur un seule asset
 
@@ -55,6 +42,19 @@ Transaction.belongsTo(AssetList, {
 AssetList.hasMany(Transaction, {
   as: 'transactions',
   foreignKey: 'asset_id',
+});
+
+// Portfolio & PortfolioAsset association
+
+Portfolio.hasMany(PortfolioAsset, {
+  as: 'assetsInPortfolio',
+  foreignKey: 'portfolio_id',
+  onDelete: 'CASCADE',
+});
+
+PortfolioAsset.belongsTo(Portfolio, {
+  as: 'portfolio',
+  foreignKey: 'portfolio_id',
 });
 
 // association entre Transaction et PortfolioAsset
