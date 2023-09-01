@@ -19,7 +19,7 @@ CREATE TABLE "portfolio" (
   "user_id" INTEGER NOT NULL REFERENCES "user"("id"),
   "name" TEXT NOT NULL,
   "strategy" TEXT NOT NULL,
-  "total_invested" DECIMAL (9,2) DEFAULT 0,
+  "total_invested" FLOAT DEFAULT 0,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updated_at" TIMESTAMPTZ
 );
@@ -37,8 +37,8 @@ CREATE TABLE "portfolio_asset" (
   "portfolio_id" INTEGER NOT NULL REFERENCES "portfolio"("id"),
   "symbol" TEXT NOT NULL,
   "name" TEXT NOT NULL,
-  "remaining_quantity" DECIMAL (9,2) DEFAULT 0,
-  "historic_price" decimal (7,2) NOT NULL,
+  "remaining_quantity" FLOAT DEFAULT 0,
+  "historic_price" FLOAT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updated_at" TIMESTAMPTZ
 );
@@ -50,9 +50,9 @@ CREATE TABLE "transaction" (
  "symbol" TEXT NOT NULL,
  "purchase_datetime" timestamptz NOT NULL,
  "sell_datetime" timestamptz,
- "asset_price" decimal (7,2) NOT NULL,
+ "asset_price" FLOAT NOT NULL,
  "quantity" INTEGER NOT NULL,
- "total_transacted" decimal (9,2) NOT NULL,
+ "total_transacted" FLOAT NOT NULL,
  "note" TEXT,
  "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
  "updated_at" TIMESTAMPTZ
