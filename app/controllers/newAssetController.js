@@ -1,11 +1,10 @@
 import axios from 'axios';
 import AssetList from '../models/AssetList.js';
-// import User from '../models/User.js';
 import Portfolio from '../models/Portfolio.js';
 import PortfolioAsset from '../models/PortfolioAsset.js';
 import Transaction from '../models/Transaction.js';
 
-const newAssetController = {
+const assetController = {
   getAllAssets: async (req, res) => {
     try {
       const allAssets = await AssetList.findAll();
@@ -57,7 +56,7 @@ const newAssetController = {
         });
       }
 
-      const priceData = parseFloat(response.data.values[0].open);
+      const priceData = response.data.values[0].open;
       const purchaseValue = priceData * parseFloat(quantity);
 
       let newTransaction;
@@ -74,11 +73,13 @@ const newAssetController = {
 
         // eslint-disable-next-line max-len
         const updatedTotalInvested = parseFloat(updateUserPortfolio.totalInvested) + parseFloat(purchaseValue);
+        const updatedTotalInvestedRounded = parseFloat(updatedTotalInvested.toFixed(2));
 
         await Portfolio.update(
-          { totalInvested: updatedTotalInvested },
+          { totalInvested: updatedTotalInvestedRounded },
           { where: { id: portfolioId } },
         );
+        console.log(updateUserPortfolio.totalInvested);
 
         newTransaction = await Transaction.create({
           assetId: asset.id,
@@ -139,4 +140,4 @@ const newAssetController = {
 
 };
 
-export default newAssetController;
+export default assetController;
