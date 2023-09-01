@@ -1,7 +1,7 @@
 import Portfolio from '../models/Portfolio.js';
 import PortfolioAsset from '../models/PortfolioAsset.js';
 import Transaction from '../models/Transaction.js';
-import AssetList from '../models/AssetList.js';
+// import AssetList from '../models/AssetList.js';
 
 const portfolioController = {
 
@@ -195,26 +195,67 @@ const portfolioController = {
     }
   },
 
+  // averagePurchasePrice: async (req, res) => {
+  //   const portfolioId = req.params.id;
+
+  //   try {
+  //     const transactions = await Transaction.findAll({
+  //       where: { portfolioId },
+  //       include: {
+  //         model: AssetList,
+  //         as: 'asset',
+  //         attributes: ['symbol'],
+  //       },
+  //     });
+
+  //     const averagePrices = {};
+
+  //     transactions.forEach((transaction) => {
+  //       const { asset, assetPrice } = transaction;
+  //       const { symbol } = asset;
+
+  //       const purchasePrice = parseFloat(assetPrice);
+
+  //       if (averagePrices[symbol]) {
+  //         averagePrices[symbol].totalPrice += purchasePrice;
+  //         averagePrices[symbol].count += 1;
+  //       } else {
+  //         averagePrices[symbol] = {
+  //           totalPrice: purchasePrice,
+  //           count: 1,
+  //         };
+  //       }
+  //     });
+
+  //     // Calculate average and format the result using Object.keys
+  //     Object.keys(averagePrices).forEach((symbol) => {
+  //       const { totalPrice, count } = averagePrices[symbol];
+  //       averagePrices[symbol] = totalPrice / count;
+  //     });
+
+  //     return res.status(200).json({
+  //       message: 'Average purchase prices calculated successfully',
+  //       averagePrices,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     return res.status(500).json({ error: 'Error calculating average purchase prices' });
+  //   }
+  // },
+
   averagePurchasePrice: async (req, res) => {
     const portfolioId = req.params.id;
 
     try {
       const transactions = await Transaction.findAll({
         where: { portfolioId },
-        include: {
-          model: AssetList,
-          as: 'asset',
-          attributes: ['symbol'],
-        },
       });
 
       const averagePrices = {};
 
       transactions.forEach((transaction) => {
-        const { asset, assetPrice } = transaction;
-        const { symbol } = asset;
-
-        const purchasePrice = parseFloat(assetPrice);
+        const { symbol } = transaction;
+        const purchasePrice = parseFloat(transaction.assetPrice);
 
         if (averagePrices[symbol]) {
           averagePrices[symbol].totalPrice += purchasePrice;
@@ -227,7 +268,6 @@ const portfolioController = {
         }
       });
 
-      // Calculate average and format the result using Object.keys
       Object.keys(averagePrices).forEach((symbol) => {
         const { totalPrice, count } = averagePrices[symbol];
         averagePrices[symbol] = totalPrice / count;
@@ -238,7 +278,6 @@ const portfolioController = {
         averagePrices,
       });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ error: 'Error calculating average purchase prices' });
     }
   },

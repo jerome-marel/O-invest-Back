@@ -1,25 +1,22 @@
 import User from '../models/User.js';
+import '../utils/env.load.js';
 
 const userController = {
   getProfile: async (req, res) => {
+    const userId = req.user.id;
     try {
-      const foundUser = await User.findByPk(req.params.id, {
-        include: 'userPortfolios',
+      const userInfo = await User.findByPk(userId);
 
-        order: [
-          ['total_invested', 'DESC'],
-          ['name', 'ASC'],
-        ],
-      });
-      if (!foundUser) {
-        return res.status(404).json({ error: 'User not found. Please check the provided id.' });
+      if (userInfo) {
+        return res.status(200).json({
+          message: 'User found in database',
+          userInfo,
+        });
       }
-      res.json(foundUser);
+      return res.status(404).json({ error: 'User not found' });
     } catch (err) {
-      // console.error('Error getting user', err);
       return res.status(500).json({ error: 'Internal server error' });
     }
-    return null;
   },
 
   editProfile: async (req, res) => {
