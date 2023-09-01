@@ -16,6 +16,10 @@ Transaction.init(
     },
     portfolioAssetId: {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    symbol: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     purchaseDatetime: {
