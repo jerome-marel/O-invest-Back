@@ -32,13 +32,59 @@ const statController = {
         const totalInvested = parseFloat(portfolio.totalInvested);
         return Number.isNaN(totalInvested) ? total : total + totalInvested;
       }, 0);
-      const totalInvestedPortfoliosRounded = totalInvestedPortfolios.toFixed(2);
-      const totalInvestedPortfoliosToNumber = Number(totalInvestedPortfoliosRounded);
-      return res.status(200).json({
-        message: 'All portfolios for user found',
-        allPortfolios,
-        totalInvestedPortfoliosToNumber,
+
+      const portfolioIds = allPortfolios.map((portfolio) => portfolio.id);
+
+      const allPortfolioAssets = await PortfolioAsset.findAll({
+        where: { portfolioId: portfolioIds },
       });
+
+      const currentPriceData = {};
+
+      allPortfolioAssets.forEach((asset) => {
+        const { symbol, historicPrice } = asset;
+
+        currentPriceData[symbol] = {
+          price: historicPrice,
+        };
+      });
+
+      try {
+        let portfolioValuation = 0;
+
+        if (currentPriceData.price) {
+          const singleAssetPrice = parseFloat(currentPriceData.price);
+          // eslint-disable-next-line max-len
+          portfolioValuation = singleAssetPrice * parseFloat(allPortfolioAssets[0].remainingQuantity);
+        } else {
+          allPortfolioAssets.forEach((asset) => {
+            const { symbol, remainingQuantity } = asset;
+            if (currentPriceData[symbol] && currentPriceData[symbol].price) {
+              const currentPrice = parseFloat(currentPriceData[symbol].price);
+              portfolioValuation += currentPrice * parseFloat(remainingQuantity);
+            }
+          });
+        }
+
+        let allPortfolioROIPercent = 0;
+
+        // eslint-disable-next-line max-len
+        allPortfolioROIPercent = ((portfolioValuation - totalInvestedPortfolios) / totalInvestedPortfolios) * 100;
+
+        const profitAndLoss = (portfolioValuation - totalInvestedPortfolios);
+
+        return res.status(200).json({
+          message: 'All portfolios for user found',
+          allPortfolios,
+          totalInvestedPortfolios,
+          allPortfolioAssets,
+          portfolioValuation,
+          allPortfolioROIPercent,
+          profitAndLoss,
+        });
+      } catch (err) {
+        return res.status(500).json({ error: 'Error calculating portfolio valuation and ROI' });
+      }
     } catch (err) {
       return res.status(500).json({ error: 'Internal Server Error - could not retrieve user portfolios' });
     }
@@ -161,7 +207,6 @@ const statController = {
 
       return res.status(200).json({
         message: 'Average purchase prices calculated successfully',
-        transactions,
         averagePrices,
       });
     } catch (err) {

@@ -1,6 +1,6 @@
 import express from 'express';
 import authController from '../controllers/authController.js';
-import newAssetController from '../controllers/newAssetController.js';
+import assetController from '../controllers/assetController.js';
 import portfolioController from '../controllers/portfolioController.js';
 import userController from '../controllers/userController.js';
 import { errorHandler } from '../middlewares/error.middleware.js';
@@ -20,11 +20,11 @@ router.post('/api/login', authController.login);
 router.get('/api/users', tokenMiddleware, userController.getProfile);
 
 // ALL ASSETS
-router.get('/api/assets', tokenMiddleware, newAssetController.getAllAssets);
+router.get('/api/assets', tokenMiddleware, assetController.getAllAssets);
 
 // PORTOFOLIOS
 router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfolio);
-router.post('/api/portfolios/:id/addasset', tokenMiddleware, newAssetController.addAssetToPortfolio);
+router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
 router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePortfolio);
 router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
