@@ -33,6 +33,7 @@ router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.delete
 router.get('/api/stats', tokenMiddleware, statController.allPortfoliosStats);
 router.get('/api/portfolios/:id', tokenMiddleware, statController.getOnePortfolioStats);
 router.get('/api/portfolios/:id/avg', tokenMiddleware, statController.averagePurchasePrice);
+router.get('/api/stats/portfolios/weight', tokenMiddleware, statController.getPortfolioWeight);
 
 router.use(errorHandler);
 
