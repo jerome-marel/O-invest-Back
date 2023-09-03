@@ -186,31 +186,72 @@ const statController = {
       const averagePrices = {};
 
       transactions.forEach((transaction) => {
-        const { symbol } = transaction;
-        const purchasePrice = parseFloat(transaction.assetPrice);
+        const { symbol, assetPrice, quantity } = transaction;
 
-        if (averagePrices[symbol]) {
-          averagePrices[symbol].totalPrice += purchasePrice;
-          averagePrices[symbol].count += 1;
-        } else {
+        if (!averagePrices[symbol]) {
           averagePrices[symbol] = {
-            totalPrice: purchasePrice,
-            count: 1,
+            totalPrice: 0,
+            totalQuantity: 0,
           };
         }
+        const totalSpent = parseFloat(assetPrice) * quantity;
+
+        averagePrices[symbol].totalPrice += totalSpent;
+        averagePrices[symbol].totalQuantity += quantity;
       });
 
       Object.keys(averagePrices).forEach((symbol) => {
-        const { totalPrice, count } = averagePrices[symbol];
-        averagePrices[symbol] = totalPrice / count;
+        const { totalPrice, totalQuantity } = averagePrices[symbol];
+        averagePrices[symbol] = parseFloat((totalPrice / totalQuantity).toFixed(2));
       });
-
       return res.status(200).json({
         message: 'Average purchase prices calculated successfully',
         averagePrices,
       });
     } catch (err) {
       return res.status(500).json({ error: 'Error calculating average purchase prices' });
+    }
+  },
+
+  getPortfolioWeight: async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+      const allPortfolios = await Portfolio.findAll({
+        where: { userId },
+      });
+
+      if (!allPortfolios || allPortfolios.length === 0) {
+        return res.status(404).json({ error: 'No portfolios found for current user' });
+      }
+
+      const portfolioIds = allPortfolios.map((portfolio) => portfolio.id);
+      const allPortfolioAssets = await PortfolioAsset.findAll({
+        where: { portfolioId: portfolioIds },
+      });
+      const portfolioValuations = allPortfolios.map((portfolio) => {
+        // eslint-disable-next-line max-len
+        const portfolioAssets = allPortfolioAssets.filter((asset) => asset.portfolioId === portfolio.id);
+
+        const portfolioValuation = portfolioAssets.reduce((total, asset) => {
+          const assetValuation = asset.historicPrice * asset.remainingQuantity;
+          return total + assetValuation;
+        }, 0);
+
+        // Return the portfolio name and total valuation
+        return {
+          portfolioName: portfolio.name,
+          totalValuation: parseFloat(portfolioValuation),
+        };
+      });
+
+      return res.status(200).json({
+        message: 'All portfolios for user found',
+        allPortfolios,
+        portfolioValuations,
+      });
+    } catch (err) {
+      return res.status(500).json({ error: 'Internal Server Error - could not retrieve user portfolios' });
     }
   },
 
