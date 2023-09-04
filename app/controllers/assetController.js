@@ -138,6 +138,63 @@ const assetController = {
     }
   },
 
+  deleteAssetFromPortfolio: async (req, res) => {
+    const userId = req.user.id;
+    const portfolioId = req.params.id;
+    const { symbol, quantityToRemove } = req.body;
+
+    try {
+      const userPortfolio = await Portfolio.findOne({
+        where: { id: portfolioId, user_id: userId },
+      });
+      if (!userPortfolio) {
+        return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
+      }
+
+      const portfolioAsset = await PortfolioAsset.findOne({
+        where: { portfolioId, symbol },
+      });
+
+      if (!portfolioAsset) {
+        return res.status(404).json({ error: 'Asset not found in the portfolio' });
+      }
+
+      const transactionAsset = await Transaction.findOne({
+        where: { portfolioId, symbol },
+      });
+
+      if (!transactionAsset) {
+        return res.status(404).json({ error: 'Asset not found in the portfolio' });
+      }
+
+      // eslint-disable-next-line max-len
+      const { assetPrice } = transactionAsset; // You may need to adjust this based on your data model
+      const valueToRemove = parseFloat(quantityToRemove) * parseFloat(assetPrice);
+
+      // eslint-disable-next-line max-len
+      const updatedQuantity = parseFloat(portfolioAsset.remainingQuantity) - parseFloat(quantityToRemove);
+
+      if (updatedQuantity < 0) {
+        return res.status(400).json({ error: 'Quantity to remove exceeds the available quantity in the portfolio' });
+      }
+
+      await portfolioAsset.update({ remainingQuantity: updatedQuantity });
+
+      const updatedTotalInvest = parseFloat(userPortfolio.totalInvested) - valueToRemove;
+      await Portfolio.update(
+        { totalInvested: updatedTotalInvest.toFixed(2) },
+        { where: { id: portfolioId } },
+      );
+
+      return res.status(200).json({
+        message: 'Asset quantity updated in the portfolio and totalInvest updated',
+        updatedTotalInvest,
+      });
+    } catch (err) {
+      return res.status(500).json({ error: 'Error updating asset quantity in the portfolio' });
+    }
+  },
+
 };
 
 export default assetController;
