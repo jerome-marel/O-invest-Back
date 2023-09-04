@@ -28,11 +28,14 @@ router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.add
 router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
 router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePortfolio);
 router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
+router.delete('/api/portfolios/:id/deleteasset', tokenMiddleware, assetController.deleteAssetFromPortfolio);
 
 // STATS
 router.get('/api/stats', tokenMiddleware, statController.allPortfoliosStats);
+router.get('/api/stats/ranking', tokenMiddleware, statController.getRanking);
 router.get('/api/portfolios/:id', tokenMiddleware, statController.getOnePortfolioStats);
 router.get('/api/portfolios/:id/avg', tokenMiddleware, statController.averagePurchasePrice);
+router.get('/api/portfolios/:id/assets/perf', tokenMiddleware, statController.getProfitLossAsset);
 router.get('/api/stats/portfolios/weight', tokenMiddleware, statController.getPortfolioWeight);
 
 router.use(errorHandler);
