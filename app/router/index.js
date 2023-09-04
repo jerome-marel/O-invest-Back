@@ -114,6 +114,7 @@ router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePor
  *         description: Portfolio deleted successfully, as well as related transactions, and portfolio assets.
  */
 router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
+router.delete('/api/portfolios/:id/deleteasset', tokenMiddleware, assetController.deleteAssetFromPortfolio);
 
 /**
  * @swagger
@@ -134,6 +135,7 @@ router.get('/api/stats', tokenMiddleware, statController.allPortfoliosStats);
  *       '200':
  *         description: Successful response with the specific portfolio stats
  */
+router.get('/api/stats/ranking', tokenMiddleware, statController.getRanking);
 router.get('/api/portfolios/:id', tokenMiddleware, statController.getOnePortfolioStats);
 /**
  * @swagger
@@ -154,6 +156,8 @@ router.get('/api/portfolios/:id/avg', tokenMiddleware, statController.averagePur
  *       '200':
  *         description: All portfolios for user and their valuation found.
  */
+
+router.get('/api/portfolios/:id/assets/perf', tokenMiddleware, statController.getProfitLossAsset);
 router.get('/api/stats/portfolios/weight', tokenMiddleware, statController.getPortfolioWeight);
 
 router.use(errorHandler);

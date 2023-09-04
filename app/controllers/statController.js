@@ -207,6 +207,7 @@ const statController = {
       return res.status(200).json({
         message: 'Average asset purchase price calculated successfully',
         averagePrices,
+        transactions,
       });
     } catch (err) {
       return res.status(500).json({ error: 'Error calculating average purchase prices' });
@@ -255,5 +256,119 @@ const statController = {
     }
   },
 
+  getProfitLossAsset: async (req, res) => {
+    const portfolioId = req.params.id;
+
+    try {
+      const portfolioAssets = await PortfolioAsset.findAll({
+        where: { portfolioId },
+      });
+
+      const transactions = await Transaction.findAll({
+        where: { portfolioId },
+      });
+
+      const oneAssetProfitLoss = portfolioAssets.map((asset) => {
+        const matchingTransaction = transactions.find(
+          (transaction) => transaction.symbol === asset.symbol,
+        );
+
+        if (matchingTransaction) {
+          const { assetPrice } = matchingTransaction;
+          const { historicPrice } = asset;
+          const { remainingQuantity } = asset;
+
+          const priceDifference = historicPrice - assetPrice;
+          const assetProfitLoss = priceDifference * remainingQuantity;
+          const assetROIPercent = ((historicPrice - assetPrice) / assetPrice) * 100;
+
+          return {
+            symbol: asset.symbol,
+            assetProfitLoss,
+            assetROIPercent,
+          };
+        }
+        return null;
+      }).filter(Boolean);
+
+      return res.status(200).json({
+        message: 'Found all ROI for assets',
+        oneAssetProfitLoss,
+      });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal server error, please try again later' });
+    }
+  },
+
+  getRanking: async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+      const allPortfolios = await Portfolio.findAll({
+        where: { userId },
+      });
+
+      if (allPortfolios.length === 0) {
+        return res.status(404).json({ message: 'No portfolios found for this user.' });
+      }
+
+      const portfolioIds = allPortfolios.map((portfolio) => portfolio.id);
+
+      const portfolioAssets = await PortfolioAsset.findAll({
+        where: { portfolioId: portfolioIds },
+      });
+
+      const transactions = await Transaction.findAll({
+        where: { portfolioId: portfolioIds },
+      });
+
+      const oneAssetProfitLoss = portfolioAssets.map((asset) => {
+        try {
+          const matchingTransaction = transactions.find(
+            (transaction) => transaction.symbol === asset.symbol,
+          );
+
+          if (matchingTransaction) {
+            const { assetPrice } = matchingTransaction;
+            const { historicPrice } = asset;
+            const { remainingQuantity } = asset;
+
+            // Calculate the profit or loss for the asset
+            const priceDifference = historicPrice - assetPrice;
+            const assetProfitLoss = priceDifference * remainingQuantity;
+            const assetROIPercent = ((historicPrice - assetPrice) / assetPrice) * 100;
+
+            return {
+              symbol: asset.symbol,
+              assetProfitLoss,
+              assetROIPercent,
+            };
+          }
+        } catch (err) {
+          return res.status(404).json({
+            error: 'Error calculating profit and loss',
+            err,
+          });
+        }
+
+        return null;
+      }).filter(Boolean);
+
+      oneAssetProfitLoss.sort((a, b) => b.assetROIPercent - a.assetROIPercent);
+
+      const topPerformer = oneAssetProfitLoss.slice(0, 1);
+      const worstPerformer = oneAssetProfitLoss.slice(-1);
+
+      return res.status(200).json({
+        message: 'Found portfolios',
+        topPerformer,
+        worstPerformer,
+      });
+    } catch (err) {
+      return res.status(500).json({ error: 'Internal server error, please try again later' });
+    }
+  },
+
 };
+
 export default statController;
