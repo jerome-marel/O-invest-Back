@@ -1,179 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="531" height="694" viewBox="0 0 531 694" xmlns="http://www.w3.org/2000/svg">
-<rect id="frame" x="0" y="0" width="531" height="694" fill="#f7f7f7" stroke="none" stroke-width="0"/>
+<svg width="613" height="542" viewBox="0 0 613 542" xmlns="http://www.w3.org/2000/svg">
+<rect id="frame" x="0" y="0" width="613" height="542" fill="#f7f7f7" stroke="none" stroke-width="0"/>
 
-<!-- Association DETENIR -->
+<!-- Association RÉALISER -->
 <g>
-	<line x1="470" y1="94" x2="470" y2="229" stroke="#8073ac" stroke-width="2"/>
-	<text x="475" y="196" fill="#b35806" font-family="Verdana" font-size="12">0,N</text>
-	<line x1="470" y1="364" x2="470" y2="229" stroke="#8073ac" stroke-width="2"/>
-	<text x="475" y="280" fill="#b35806" font-family="Verdana" font-size="12">1,1</text>
+	<line x1="173" y1="313" x2="173" y2="136" stroke="#7fbc41" stroke-width="2"/>
+	<text x="178" y="229" fill="#c51b7d" font-family="Verdana" font-size="12">0,N</text>
+	<line x1="322" y1="136" x2="173" y2="136" stroke="#7fbc41" stroke-width="2"/>
+	<text x="232" y="153" fill="#c51b7d" font-family="Verdana" font-size="12">1,1</text>
 	<g>
-		<path d="M491 204 a14 14 90 0 1 14 14 V229 h-70 V218 a14 14 90 0 1 14 -14" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
-		<path d="M505 229 v11 a14 14 90 0 1 -14 14 H449 a14 14 90 0 1 -14 -14 V229 H70" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
-		<rect x="435" y="204" width="70" height="50" fill="none" rx="14" stroke="#8073ac" stroke-width="2"/>
-		<line x1="435" y1="229" x2="505" y2="229" stroke="#8073ac" stroke-width="1"/>
-		<text x="443" y="221.75" fill="#000" font-family="Verdana" font-size="12">DETENIR</text>
+		<path d="M197 111 a14 14 90 0 1 14 14 V136 h-76 V125 a14 14 90 0 1 14 -14" fill="#b8e186" stroke="#b8e186" stroke-width="0"/>
+		<path d="M211 136 v11 a14 14 90 0 1 -14 14 H149 a14 14 90 0 1 -14 -14 V136 H76" fill="#e6f5d0" stroke="#e6f5d0" stroke-width="0"/>
+		<rect x="135" y="111" width="76" height="50" fill="none" rx="14" stroke="#7fbc41" stroke-width="2"/>
+		<line x1="135" y1="136" x2="211" y2="136" stroke="#7fbc41" stroke-width="1"/>
+		<text x="143" y="128.75" fill="#000" font-family="Verdana" font-size="12">RÉALISER</text>
 	</g>
 </g>
 
 <!-- Association CHOISIT -->
 <g>
-	<line x1="182" y1="364" x2="52" y2="364" stroke="#8073ac" stroke-width="2"/>
-	<text x="92" y="381" fill="#b35806" font-family="Verdana" font-size="12">1,1</text>
-	<line x1="52" y1="592" x2="52" y2="364" stroke="#8073ac" stroke-width="2"/>
-	<text x="57" y="525" fill="#b35806" font-family="Verdana" font-size="12">0,N</text>
+	<line x1="322" y1="136" x2="452" y2="136" stroke="#7fbc41" stroke-width="2"/>
+	<text x="391" y="153" fill="#c51b7d" font-family="Verdana" font-size="12">1,1</text>
+	<line x1="561" y1="136" x2="452" y2="136" stroke="#7fbc41" stroke-width="2"/>
+	<text x="491" y="153" fill="#c51b7d" font-family="Verdana" font-size="12">0,N</text>
 	<g>
-		<path d="M72 339 a14 14 90 0 1 14 14 V364 h-68 V353 a14 14 90 0 1 14 -14" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
-		<path d="M86 364 v11 a14 14 90 0 1 -14 14 H32 a14 14 90 0 1 -14 -14 V364 H68" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
-		<rect x="18" y="339" width="68" height="50" fill="none" rx="14" stroke="#8073ac" stroke-width="2"/>
-		<line x1="18" y1="364" x2="86" y2="364" stroke="#8073ac" stroke-width="1"/>
-		<text x="25" y="356.75" fill="#000" font-family="Verdana" font-size="12">CHOISIT</text>
+		<path d="M472 111 a14 14 90 0 1 14 14 V136 h-68 V125 a14 14 90 0 1 14 -14" fill="#b8e186" stroke="#b8e186" stroke-width="0"/>
+		<path d="M486 136 v11 a14 14 90 0 1 -14 14 H432 a14 14 90 0 1 -14 -14 V136 H68" fill="#e6f5d0" stroke="#e6f5d0" stroke-width="0"/>
+		<rect x="418" y="111" width="68" height="50" fill="none" rx="14" stroke="#7fbc41" stroke-width="2"/>
+		<line x1="418" y1="136" x2="486" y2="136" stroke="#7fbc41" stroke-width="1"/>
+		<text x="425" y="128.75" fill="#000" font-family="Verdana" font-size="12">CHOISIT</text>
 	</g>
 </g>
 
-<!-- Association RÉALISER -->
+<!-- Association DETENIR -->
 <g>
-	<line x1="470" y1="364" x2="321" y2="364" stroke="#8073ac" stroke-width="2"/>
-	<text x="394" y="381" fill="#b35806" font-family="Verdana" font-size="12">0,N</text>
-	<line x1="182" y1="364" x2="321" y2="364" stroke="#8073ac" stroke-width="2"/>
-	<text x="251" y="381" fill="#b35806" font-family="Verdana" font-size="12">1,1</text>
+	<line x1="49" y1="448" x2="49" y2="313" stroke="#7fbc41" stroke-width="2"/>
+	<text x="54" y="355" fill="#c51b7d" font-family="Verdana" font-size="12">0,N</text>
+	<line x1="173" y1="313" x2="49" y2="313" stroke="#7fbc41" stroke-width="2"/>
+	<text x="98" y="330" fill="#c51b7d" font-family="Verdana" font-size="12">1,1</text>
 	<g>
-		<path d="M345 339 a14 14 90 0 1 14 14 V364 h-76 V353 a14 14 90 0 1 14 -14" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
-		<path d="M359 364 v11 a14 14 90 0 1 -14 14 H297 a14 14 90 0 1 -14 -14 V364 H76" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
-		<rect x="283" y="339" width="76" height="50" fill="none" rx="14" stroke="#8073ac" stroke-width="2"/>
-		<line x1="283" y1="364" x2="359" y2="364" stroke="#8073ac" stroke-width="1"/>
-		<text x="291" y="356.75" fill="#000" font-family="Verdana" font-size="12">RÉALISER</text>
+		<path d="M70 288 a14 14 90 0 1 14 14 V313 h-70 V302 a14 14 90 0 1 14 -14" fill="#b8e186" stroke="#b8e186" stroke-width="0"/>
+		<path d="M84 313 v11 a14 14 90 0 1 -14 14 H28 a14 14 90 0 1 -14 -14 V313 H70" fill="#e6f5d0" stroke="#e6f5d0" stroke-width="0"/>
+		<rect x="14" y="288" width="70" height="50" fill="none" rx="14" stroke="#7fbc41" stroke-width="2"/>
+		<line x1="14" y1="313" x2="84" y2="313" stroke="#7fbc41" stroke-width="1"/>
+		<text x="22" y="305.75" fill="#000" font-family="Verdana" font-size="12">DETENIR</text>
 	</g>
 </g>
 
 <!-- Association CONCERNE -->
 <g>
-	<line x1="182" y1="364" x2="182" y2="592" stroke="#8073ac" stroke-width="2"/>
-	<text x="187" y="491" fill="#b35806" font-family="Verdana" font-size="12">1,1</text>
-	<line x1="321" y1="592" x2="182" y2="592" stroke="#8073ac" stroke-width="2"/>
-	<text x="229" y="609" fill="#b35806" font-family="Verdana" font-size="12">1,N</text>
+	<line x1="322" y1="136" x2="322" y2="313" stroke="#7fbc41" stroke-width="2"/>
+	<text x="327" y="280" fill="#c51b7d" font-family="Verdana" font-size="12">1,1</text>
+	<line x1="322" y1="448" x2="322" y2="313" stroke="#7fbc41" stroke-width="2"/>
+	<text x="327" y="355" fill="#c51b7d" font-family="Verdana" font-size="12">1,N</text>
 	<g>
-		<path d="M210 567 a14 14 90 0 1 14 14 V592 h-84 V581 a14 14 90 0 1 14 -14" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
-		<path d="M224 592 v11 a14 14 90 0 1 -14 14 H154 a14 14 90 0 1 -14 -14 V592 H84" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
-		<rect x="140" y="567" width="84" height="50" fill="none" rx="14" stroke="#8073ac" stroke-width="2"/>
-		<line x1="140" y1="592" x2="224" y2="592" stroke="#8073ac" stroke-width="1"/>
-		<text x="148" y="584.75" fill="#000" font-family="Verdana" font-size="12">CONCERNE</text>
+		<path d="M350 288 a14 14 90 0 1 14 14 V313 h-84 V302 a14 14 90 0 1 14 -14" fill="#b8e186" stroke="#b8e186" stroke-width="0"/>
+		<path d="M364 313 v11 a14 14 90 0 1 -14 14 H294 a14 14 90 0 1 -14 -14 V313 H84" fill="#e6f5d0" stroke="#e6f5d0" stroke-width="0"/>
+		<rect x="280" y="288" width="84" height="50" fill="none" rx="14" stroke="#7fbc41" stroke-width="2"/>
+		<line x1="280" y1="313" x2="364" y2="313" stroke="#7fbc41" stroke-width="1"/>
+		<text x="288" y="305.75" fill="#000" font-family="Verdana" font-size="12">CONCERNE</text>
 	</g>
 </g>
 
 <!-- Association EST COMPOSE -->
 <g>
-	<line x1="470" y1="364" x2="470" y2="592" stroke="#8073ac" stroke-width="2"/>
-	<text x="475" y="457" fill="#b35806" font-family="Verdana" font-size="12">0,N</text>
-	<line x1="321" y1="592" x2="470" y2="592" stroke="#8073ac" stroke-width="2"/>
-	<text x="391" y="609" fill="#b35806" font-family="Verdana" font-size="12">1,1</text>
+	<line x1="173" y1="313" x2="173" y2="448" stroke="#7fbc41" stroke-width="2"/>
+	<text x="178" y="406" fill="#c51b7d" font-family="Verdana" font-size="12">0,N</text>
+	<line x1="322" y1="448" x2="173" y2="448" stroke="#7fbc41" stroke-width="2"/>
+	<text x="231" y="465" fill="#c51b7d" font-family="Verdana" font-size="12">1,1</text>
 	<g>
-		<path d="M508 567 a14 14 90 0 1 14 14 V592 h-104 V581 a14 14 90 0 1 14 -14" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
-		<path d="M522 592 v11 a14 14 90 0 1 -14 14 H432 a14 14 90 0 1 -14 -14 V592 H104" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
-		<rect x="418" y="567" width="104" height="50" fill="none" rx="14" stroke="#8073ac" stroke-width="2"/>
-		<line x1="418" y1="592" x2="522" y2="592" stroke="#8073ac" stroke-width="1"/>
-		<text x="426" y="584.75" fill="#000" font-family="Verdana" font-size="12">EST COMPOSE</text>
+		<path d="M211 423 a14 14 90 0 1 14 14 V448 h-104 V437 a14 14 90 0 1 14 -14" fill="#b8e186" stroke="#b8e186" stroke-width="0"/>
+		<path d="M225 448 v11 a14 14 90 0 1 -14 14 H135 a14 14 90 0 1 -14 -14 V448 H104" fill="#e6f5d0" stroke="#e6f5d0" stroke-width="0"/>
+		<rect x="121" y="423" width="104" height="50" fill="none" rx="14" stroke="#7fbc41" stroke-width="2"/>
+		<line x1="121" y1="448" x2="225" y2="448" stroke="#7fbc41" stroke-width="1"/>
+		<text x="129" y="440.75" fill="#000" font-family="Verdana" font-size="12">EST COMPOSE</text>
 	</g>
-</g>
-
-<!-- Entity USER -->
-<g>
-	<g>
-		<rect x="430" y="9" width="80" height="25" fill="#fdb863" stroke="#fdb863" stroke-width="0" opacity="1"/>
-		<rect x="430" y="34" width="80" height="145" fill="#fee0b6" stroke="#fee0b6" stroke-width="0" opacity="1"/>
-		<rect x="430" y="9" width="80" height="170" fill="none" stroke="#e08214" stroke-width="2" opacity="1"/>
-		<line x1="430" y1="34" x2="510" y2="34" stroke="#e08214" stroke-width="1"/>
-	</g>
-	<text x="453" y="26.75" fill="#000" font-family="Verdana" font-size="12">USER</text>
-	<text x="435" y="51.8" fill="#000" font-family="Verdana" font-size="12">id</text>
-	<line x1="435" y1="54" x2="447" y2="54" stroke="#000" stroke-width="1"/>
-	<text x="435" y="68.8" fill="#000" font-family="Verdana" font-size="12">first_name</text>
-	<text x="435" y="85.8" fill="#000" font-family="Verdana" font-size="12">last_name</text>
-	<text x="435" y="102.8" fill="#000" font-family="Verdana" font-size="12">email</text>
-	<text x="435" y="119.8" fill="#000" font-family="Verdana" font-size="12">password</text>
-	<text x="435" y="136.8" fill="#000" font-family="Verdana" font-size="12">risk_profile</text>
-	<text x="435" y="153.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
-	<text x="435" y="170.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
 </g>
 
 <!-- Entity TRANSACTION -->
 <g>
 	<g>
-		<rect x="118" y="254" width="128" height="25" fill="#fdb863" stroke="#fdb863" stroke-width="0" opacity="1"/>
-		<rect x="118" y="279" width="128" height="195" fill="#fee0b6" stroke="#fee0b6" stroke-width="0" opacity="1"/>
-		<rect x="118" y="254" width="128" height="220" fill="none" stroke="#e08214" stroke-width="2" opacity="1"/>
-		<line x1="118" y1="279" x2="246" y2="279" stroke="#e08214" stroke-width="1"/>
+		<rect x="258" y="9" width="128" height="25" fill="#f1b6da" stroke="#f1b6da" stroke-width="0" opacity="1"/>
+		<rect x="258" y="34" width="128" height="229" fill="#fde0ef" stroke="#fde0ef" stroke-width="0" opacity="1"/>
+		<rect x="258" y="9" width="128" height="254" fill="none" stroke="#de77ae" stroke-width="2" opacity="1"/>
+		<line x1="258" y1="34" x2="386" y2="34" stroke="#de77ae" stroke-width="1"/>
 	</g>
-	<text x="137" y="271.75" fill="#000" font-family="Verdana" font-size="12">TRANSACTION</text>
-	<text x="123" y="296.8" fill="#000" font-family="Verdana" font-size="12">id</text>
-	<line x1="123" y1="299" x2="135" y2="299" stroke="#000" stroke-width="1"/>
-	<text x="123" y="313.8" fill="#000" font-family="Verdana" font-size="12">portfolio_id</text>
-	<text x="123" y="330.8" fill="#000" font-family="Verdana" font-size="12">asset_id</text>
-	<text x="123" y="347.8" fill="#000" font-family="Verdana" font-size="12">purchase_datetime</text>
-	<text x="123" y="364.8" fill="#000" font-family="Verdana" font-size="12">sell_datetime</text>
-	<text x="123" y="381.8" fill="#000" font-family="Verdana" font-size="12">asset_price</text>
-	<text x="123" y="398.8" fill="#000" font-family="Verdana" font-size="12">quantity</text>
-	<text x="123" y="415.8" fill="#000" font-family="Verdana" font-size="12">total_transacted</text>
-	<text x="123" y="432.8" fill="#000" font-family="Verdana" font-size="12">note</text>
-	<text x="123" y="449.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
-	<text x="123" y="466.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
-</g>
-
-<!-- Entity PORTFOLIO -->
-<g>
-	<g>
-		<rect x="421" y="288" width="98" height="25" fill="#fdb863" stroke="#fdb863" stroke-width="0" opacity="1"/>
-		<rect x="421" y="313" width="98" height="127" fill="#fee0b6" stroke="#fee0b6" stroke-width="0" opacity="1"/>
-		<rect x="421" y="288" width="98" height="152" fill="none" stroke="#e08214" stroke-width="2" opacity="1"/>
-		<line x1="421" y1="313" x2="519" y2="313" stroke="#e08214" stroke-width="1"/>
-	</g>
-	<text x="435" y="305.75" fill="#000" font-family="Verdana" font-size="12">PORTFOLIO</text>
-	<text x="426" y="330.8" fill="#000" font-family="Verdana" font-size="12">id</text>
-	<line x1="426" y1="333" x2="438" y2="333" stroke="#000" stroke-width="1"/>
-	<text x="426" y="347.8" fill="#000" font-family="Verdana" font-size="12">user_id</text>
-	<text x="426" y="364.8" fill="#000" font-family="Verdana" font-size="12">name</text>
-	<text x="426" y="381.8" fill="#000" font-family="Verdana" font-size="12">strategy</text>
-	<text x="426" y="398.8" fill="#000" font-family="Verdana" font-size="12">total_invested</text>
-	<text x="426" y="415.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
-	<text x="426" y="432.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
+	<text x="277" y="26.75" fill="#000" font-family="Verdana" font-size="12">TRANSACTION</text>
+	<text x="263" y="51.8" fill="#000" font-family="Verdana" font-size="12">id</text>
+	<line x1="263" y1="54" x2="275" y2="54" stroke="#000" stroke-width="1"/>
+	<text x="263" y="68.8" fill="#000" font-family="Verdana" font-size="12">portfolio_id</text>
+	<text x="263" y="85.8" fill="#000" font-family="Verdana" font-size="12">asset_id</text>
+	<text x="263" y="102.8" fill="#000" font-family="Verdana" font-size="12">portfolio_asset_id</text>
+	<text x="263" y="119.8" fill="#000" font-family="Verdana" font-size="12">symbol</text>
+	<text x="263" y="136.8" fill="#000" font-family="Verdana" font-size="12">purchase_datetime</text>
+	<text x="263" y="153.8" fill="#000" font-family="Verdana" font-size="12">sell_datetime</text>
+	<text x="263" y="170.8" fill="#000" font-family="Verdana" font-size="12">asset_price</text>
+	<text x="263" y="187.8" fill="#000" font-family="Verdana" font-size="12">quantity</text>
+	<text x="263" y="204.8" fill="#000" font-family="Verdana" font-size="12">total_transacted</text>
+	<text x="263" y="221.8" fill="#000" font-family="Verdana" font-size="12">note</text>
+	<text x="263" y="238.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
+	<text x="263" y="255.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
 </g>
 
 <!-- Entity ASSET_LIST -->
 <g>
 	<g>
-		<rect x="9" y="533" width="86" height="25" fill="#fdb863" stroke="#fdb863" stroke-width="0" opacity="1"/>
-		<rect x="9" y="558" width="86" height="93" fill="#fee0b6" stroke="#fee0b6" stroke-width="0" opacity="1"/>
-		<rect x="9" y="533" width="86" height="118" fill="none" stroke="#e08214" stroke-width="2" opacity="1"/>
-		<line x1="9" y1="558" x2="95" y2="558" stroke="#e08214" stroke-width="1"/>
+		<rect x="518" y="68" width="86" height="25" fill="#f1b6da" stroke="#f1b6da" stroke-width="0" opacity="1"/>
+		<rect x="518" y="93" width="86" height="111" fill="#fde0ef" stroke="#fde0ef" stroke-width="0" opacity="1"/>
+		<rect x="518" y="68" width="86" height="136" fill="none" stroke="#de77ae" stroke-width="2" opacity="1"/>
+		<line x1="518" y1="93" x2="604" y2="93" stroke="#de77ae" stroke-width="1"/>
 	</g>
-	<text x="14" y="550.75" fill="#000" font-family="Verdana" font-size="12">ASSET_LIST</text>
-	<text x="14" y="575.8" fill="#000" font-family="Verdana" font-size="12">id</text>
-	<line x1="14" y1="578" x2="26" y2="578" stroke="#000" stroke-width="1"/>
-	<text x="14" y="592.8" fill="#000" font-family="Verdana" font-size="12">symbol</text>
-	<text x="14" y="609.8" fill="#000" font-family="Verdana" font-size="12">name</text>
-	<text x="14" y="626.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
-	<text x="14" y="643.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
+	<text x="523" y="85.75" fill="#000" font-family="Verdana" font-size="12">ASSET_LIST</text>
+	<text x="523" y="110.8" fill="#000" font-family="Verdana" font-size="12">id</text>
+	<line x1="523" y1="113" x2="535" y2="113" stroke="#000" stroke-width="1"/>
+	<text x="523" y="127.8" fill="#000" font-family="Verdana" font-size="12">symbol</text>
+	<text x="523" y="144.8" fill="#000" font-family="Verdana" font-size="12">name</text>
+	<text x="523" y="161.8" fill="#000" font-family="Verdana" font-size="12">sector</text>
+	<text x="523" y="178.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
+	<text x="523" y="195.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
+</g>
+
+<!-- Entity PORTFOLIO -->
+<g>
+	<g>
+		<rect x="124" y="237" width="98" height="25" fill="#f1b6da" stroke="#f1b6da" stroke-width="0" opacity="1"/>
+		<rect x="124" y="262" width="98" height="127" fill="#fde0ef" stroke="#fde0ef" stroke-width="0" opacity="1"/>
+		<rect x="124" y="237" width="98" height="152" fill="none" stroke="#de77ae" stroke-width="2" opacity="1"/>
+		<line x1="124" y1="262" x2="222" y2="262" stroke="#de77ae" stroke-width="1"/>
+	</g>
+	<text x="138" y="254.75" fill="#000" font-family="Verdana" font-size="12">PORTFOLIO</text>
+	<text x="129" y="279.8" fill="#000" font-family="Verdana" font-size="12">id</text>
+	<line x1="129" y1="282" x2="141" y2="282" stroke="#000" stroke-width="1"/>
+	<text x="129" y="296.8" fill="#000" font-family="Verdana" font-size="12">user_id</text>
+	<text x="129" y="313.8" fill="#000" font-family="Verdana" font-size="12">name</text>
+	<text x="129" y="330.8" fill="#000" font-family="Verdana" font-size="12">strategy</text>
+	<text x="129" y="347.8" fill="#000" font-family="Verdana" font-size="12">total_invested</text>
+	<text x="129" y="364.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
+	<text x="129" y="381.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
+</g>
+
+<!-- Entity USER -->
+<g>
+	<g>
+		<rect x="9" y="363" width="80" height="25" fill="#f1b6da" stroke="#f1b6da" stroke-width="0" opacity="1"/>
+		<rect x="9" y="388" width="80" height="145" fill="#fde0ef" stroke="#fde0ef" stroke-width="0" opacity="1"/>
+		<rect x="9" y="363" width="80" height="170" fill="none" stroke="#de77ae" stroke-width="2" opacity="1"/>
+		<line x1="9" y1="388" x2="89" y2="388" stroke="#de77ae" stroke-width="1"/>
+	</g>
+	<text x="32" y="380.75" fill="#000" font-family="Verdana" font-size="12">USER</text>
+	<text x="14" y="405.8" fill="#000" font-family="Verdana" font-size="12">id</text>
+	<line x1="14" y1="408" x2="26" y2="408" stroke="#000" stroke-width="1"/>
+	<text x="14" y="422.8" fill="#000" font-family="Verdana" font-size="12">first_name</text>
+	<text x="14" y="439.8" fill="#000" font-family="Verdana" font-size="12">last_name</text>
+	<text x="14" y="456.8" fill="#000" font-family="Verdana" font-size="12">email</text>
+	<text x="14" y="473.8" fill="#000" font-family="Verdana" font-size="12">password</text>
+	<text x="14" y="490.8" fill="#000" font-family="Verdana" font-size="12">risk_profile</text>
+	<text x="14" y="507.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
+	<text x="14" y="524.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
 </g>
 
 <!-- Entity PORTFOLIO_ASSET -->
 <g>
 	<g>
-		<rect x="256" y="499" width="130" height="25" fill="#fdb863" stroke="#fdb863" stroke-width="0" opacity="1"/>
-		<rect x="256" y="524" width="130" height="161" fill="#fee0b6" stroke="#fee0b6" stroke-width="0" opacity="1"/>
-		<rect x="256" y="499" width="130" height="186" fill="none" stroke="#e08214" stroke-width="2" opacity="1"/>
-		<line x1="256" y1="524" x2="386" y2="524" stroke="#e08214" stroke-width="1"/>
+		<rect x="257" y="363" width="130" height="25" fill="#f1b6da" stroke="#f1b6da" stroke-width="0" opacity="1"/>
+		<rect x="257" y="388" width="130" height="145" fill="#fde0ef" stroke="#fde0ef" stroke-width="0" opacity="1"/>
+		<rect x="257" y="363" width="130" height="170" fill="none" stroke="#de77ae" stroke-width="2" opacity="1"/>
+		<line x1="257" y1="388" x2="387" y2="388" stroke="#de77ae" stroke-width="1"/>
 	</g>
-	<text x="262" y="516.75" fill="#000" font-family="Verdana" font-size="12">PORTFOLIO_ASSET</text>
-	<text x="261" y="541.8" fill="#000" font-family="Verdana" font-size="12">id</text>
-	<line x1="261" y1="544" x2="273" y2="544" stroke="#000" stroke-width="1"/>
-	<text x="261" y="558.8" fill="#000" font-family="Verdana" font-size="12">asset_id</text>
-	<text x="261" y="575.8" fill="#000" font-family="Verdana" font-size="12">portfolio_id</text>
-	<text x="261" y="592.8" fill="#000" font-family="Verdana" font-size="12">symbol</text>
-	<text x="261" y="609.8" fill="#000" font-family="Verdana" font-size="12">name</text>
-	<text x="261" y="626.8" fill="#000" font-family="Verdana" font-size="12">remaining_quantity</text>
-	<text x="261" y="643.8" fill="#000" font-family="Verdana" font-size="12">historic_price</text>
-	<text x="261" y="660.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
-	<text x="261" y="677.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
+	<text x="263" y="380.75" fill="#000" font-family="Verdana" font-size="12">PORTFOLIO_ASSET</text>
+	<text x="262" y="405.8" fill="#000" font-family="Verdana" font-size="12">id</text>
+	<line x1="262" y1="408" x2="274" y2="408" stroke="#000" stroke-width="1"/>
+	<text x="262" y="422.8" fill="#000" font-family="Verdana" font-size="12">portfolio_id</text>
+	<text x="262" y="439.8" fill="#000" font-family="Verdana" font-size="12">symbol</text>
+	<text x="262" y="456.8" fill="#000" font-family="Verdana" font-size="12">name</text>
+	<text x="262" y="473.8" fill="#000" font-family="Verdana" font-size="12">remaining_quantity</text>
+	<text x="262" y="490.8" fill="#000" font-family="Verdana" font-size="12">historic_price</text>
+	<text x="262" y="507.8" fill="#000" font-family="Verdana" font-size="12">created_at</text>
+	<text x="262" y="524.8" fill="#000" font-family="Verdana" font-size="12">updated_at</text>
 </g>
 </svg>
