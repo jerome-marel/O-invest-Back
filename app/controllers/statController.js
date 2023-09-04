@@ -74,7 +74,7 @@ const statController = {
         const profitAndLoss = (portfolioValuation - totalInvestedPortfolios);
 
         return res.status(200).json({
-          message: 'All portfolios for user found',
+          message: 'All portfolios and their statistics found for a user',
           allPortfolios,
           totalInvestedPortfolios,
           allPortfolioAssets,
@@ -158,7 +158,7 @@ const statController = {
         const profitAndLossRounded = parseFloat(profitAndLoss.toFixed(2));
 
         return res.status(200).json({
-          message: 'Found all transactions',
+          message: 'Successful response with the specific portfolio stats',
           portfolio,
           userPortfolioAssets,
           totalInvestedForROI,
@@ -205,7 +205,7 @@ const statController = {
         averagePrices[symbol] = parseFloat((totalPrice / totalQuantity).toFixed(2));
       });
       return res.status(200).json({
-        message: 'Average purchase prices calculated successfully',
+        message: 'Average asset purchase price calculated successfully',
         averagePrices,
       });
     } catch (err) {
@@ -246,7 +246,7 @@ const statController = {
       });
 
       return res.status(200).json({
-        message: 'All portfolios for user found',
+        message: 'All portfolios for user and their valuation found',
         allPortfolios,
         portfolioValuations,
       });
