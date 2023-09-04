@@ -31,7 +31,9 @@
     "jsonwebtoken": "^9.0.1",
     "node-fetch": "^3.3.2",
     "pg": "^8.11.3",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^8.47.0",
