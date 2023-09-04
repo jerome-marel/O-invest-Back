@@ -56,6 +56,7 @@ const portfolioController = {
   deletePortfolio: async (req, res) => {
     const portfolioId = req.params.id;
     const userId = req.user.id;
+
     try {
       const portfolio = await Portfolio.findOne({
         where: { id: portfolioId, userId },
@@ -63,17 +64,27 @@ const portfolioController = {
       if (!portfolio) {
         return res.status(404).json({ error: 'Unauthorized action - portfolio not found or does not belong to the user' });
       }
-      const portfolioAssetToDelete = await PortfolioAsset.findAll({
+
+      const portfolioAssetsToDelete = await PortfolioAsset.findAll({
         where: { portfolio_id: portfolioId },
       });
+
+      // Extract IDs
+      const portfolioAssetIdsToDelete = portfolioAssetsToDelete.map((asset) => asset.id);
+
+      // Delete transactions related to the portfolio assets
       await Transaction.destroy({
-        where: { portfolio_asset_id: portfolioAssetToDelete },
+        where: { portfolio_asset_id: portfolioAssetIdsToDelete },
       });
-      // Delete related portfolio assets first
+
+      // Delete related portfolio assets
       await PortfolioAsset.destroy({
         where: { portfolio_id: portfolioId },
       });
+
+      // Delete the portfolio itself
       await portfolio.destroy();
+
       return res.status(200).json({ message: 'Portfolio deleted successfully' });
     } catch (err) {
       console.log(err);
