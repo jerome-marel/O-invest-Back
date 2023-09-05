@@ -318,6 +318,11 @@ const statController = {
         where: { portfolioId: portfolioIds },
       });
 
+      const symbolsGraph = portfolioAssets.map((asset) => ({
+        symbol: asset.symbol,
+        name: asset.name,
+      }));
+
       const transactions = await Transaction.findAll({
         where: { portfolioId: portfolioIds },
       });
@@ -363,6 +368,7 @@ const statController = {
         message: 'Found portfolios',
         topPerformer,
         worstPerformer,
+        symbolsGraph,
       });
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error, please try again later' });

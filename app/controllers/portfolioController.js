@@ -69,10 +69,8 @@ const portfolioController = {
         where: { portfolio_id: portfolioId },
       });
 
-      // Extract IDs
       const portfolioAssetIdsToDelete = portfolioAssetsToDelete.map((asset) => asset.id);
 
-      // Delete transactions related to the portfolio assets
       await Transaction.destroy({
         where: { portfolio_asset_id: portfolioAssetIdsToDelete },
       });

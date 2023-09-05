@@ -53,6 +53,9 @@ router.post('/api/login', authController.login);
  */
 router.get('/api/users', tokenMiddleware, userController.getProfile);
 
+router.delete('/api/users/delete', tokenMiddleware, userController.deleteProfile);
+
+// ALL ASSETS
 /**
  * @swagger
  * /api/assets:
