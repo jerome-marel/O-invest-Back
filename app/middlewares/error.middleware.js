@@ -1,4 +1,6 @@
 // ESM permet d'écrire un relais plus simple au lieu d'écrire const ApiError = require... etc
+import logger from '../utils/logger.js';
+
 export { default as ApiError } from '../errors/api.error.js';
 
 export const errorHandler = (err, _, res, next) => {
@@ -13,7 +15,7 @@ export const errorHandler = (err, _, res, next) => {
     userMessage = 'Internal Server Error';
   }
   if (statusCode === 500) {
-    console.log(userMessage, err);
+    logger.info(userMessage, err);
   }
   if (res.get('Content-type')?.includes('html')) {
     res.status(statusCode).render('error', {

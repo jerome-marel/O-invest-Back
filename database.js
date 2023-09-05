@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import './app/utils/env.load.js';
+import logger from './app/utils/logger.js';
 
 const sequelize = new Sequelize(process.env.PG_URL, {
   define: {
@@ -12,10 +13,10 @@ const sequelize = new Sequelize(process.env.PG_URL, {
 // Test DB connection
 sequelize.authenticate()
   .then(() => {
-    console.log('Database connected successfully.');
+    logger.info('Database connected successfully.');
   })
   .catch((err) => {
-    console.error('Unable to connect to the database:', err);
+    logger.info('Unable to connect to the database:', err);
   });
 
 export default sequelize;

@@ -3,6 +3,7 @@ import AssetList from '../models/AssetList.js';
 import Portfolio from '../models/Portfolio.js';
 import PortfolioAsset from '../models/PortfolioAsset.js';
 import Transaction from '../models/Transaction.js';
+import logger from '../utils/logger.js';
 
 const assetController = {
   getAllAssets: async (req, res) => {
@@ -79,7 +80,7 @@ const assetController = {
           { totalInvested: updatedTotalInvestedRounded },
           { where: { id: portfolioId } },
         );
-        console.log(updateUserPortfolio.totalInvested);
+        logger.info(updateUserPortfolio.totalInvested);
 
         newTransaction = await Transaction.create({
           assetId: asset.id,
@@ -92,7 +93,7 @@ const assetController = {
           note,
         });
       } catch (err) {
-        console.log(err);
+        logger.info(err);
         return res.status(500).json({ error: 'Could not add Transaction to history - please try again later' });
       }
 

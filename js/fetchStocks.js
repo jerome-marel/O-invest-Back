@@ -1,6 +1,6 @@
 import axios from 'axios';
 import '../app/utils/env.load.js';
-
+import logger from './app/utils/logger.js';
 import pkg from 'pg';
 
 const { Client } = pkg;
@@ -32,7 +32,7 @@ export async function fetchAndUpdateStocks() {
       await client.query(query, [symbol, name, sector]);
     }
 
-    console.log('******** Nasdaq Assets Updated ********');
+    logger.info('******** Nasdaq Assets Updated ********');
   } catch (error) {
     console.error('Error:', error);
   } finally {
