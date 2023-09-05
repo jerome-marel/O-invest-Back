@@ -360,7 +360,7 @@ const statController = {
       const worstPerformer = oneAssetProfitLoss.slice(-1);
 
       return res.status(200).json({
-        message: 'Found portfolios',
+        message: 'Found top and worst performer portfolios',
         topPerformer,
         worstPerformer,
       });
