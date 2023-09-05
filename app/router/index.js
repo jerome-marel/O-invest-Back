@@ -55,6 +55,17 @@ router.get('/api/users', tokenMiddleware, userController.getProfile);
 
 /**
  * @swagger
+ * /api/users/delete:
+ *   delete:
+ *     description: delete a profile, and all concerned portfolios, transactions and assets.
+ *     responses:
+ *       '200':
+ *         description: Profile deleted.
+ */
+router.delete('/api/users/delete', tokenMiddleware, userController.deleteProfile);
+
+/**
+ * @swagger
  * /api/assets:
  *   get:
  *     description: Find all assets.
@@ -116,7 +127,7 @@ router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePor
 router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
 /**
  * @swagger
- * /api/portfolios/:id:
+ * /api/portfolios/:id/deleteasset:
  *   delete:
  *     description: on delete un asset, on mets à jour le remaining_quantity dans portfolio_asset, on efface les transactions concernées, et on mets à jour le total_invested dans la table portfolio.
  *     responses:
@@ -180,12 +191,12 @@ router.get('/api/portfolios/:id/avg', tokenMiddleware, statController.averagePur
 router.get('/api/stats/portfolios/weight', tokenMiddleware, statController.getPortfolioWeight);
 /**
  * @swagger
- * /api/stats/portfolios/weight:
+ * /api/portfolios/:id/assets/perf:
  *   get:
- *     description: Calculate the top and worst performer portfolios
+ *     description: Calculate Profit&Loss and ROI for each asset.
  *     responses:
  *       '200':
- *         description: Found top and worst performer portfolios
+ *         description: Found Profit&Loss and ROI for each asset.
  */
 router.get('/api/portfolios/:id/assets/perf', tokenMiddleware, statController.getProfitLossAsset);
 

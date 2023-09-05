@@ -292,7 +292,7 @@ const statController = {
       }).filter(Boolean);
 
       return res.status(200).json({
-        message: 'Found all ROI for assets',
+        message: 'Found Profit&Loss and ROI for each asset.',
         oneAssetProfitLoss,
       });
     } catch (error) {
