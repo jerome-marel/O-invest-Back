@@ -1,3 +1,6 @@
+import Portfolio from '../models/Portfolio.js';
+import PortfolioAsset from '../models/PortfolioAsset.js';
+import Transaction from '../models/Transaction.js';
 import User from '../models/User.js';
 import '../utils/env.load.js';
 
@@ -42,18 +45,51 @@ const userController = {
 
   deleteProfile: async (req, res) => {
     const userId = req.user.id;
+
     try {
       const foundUser = await User.findByPk(userId);
       if (!foundUser) {
         return res.status(404).json({ error: 'User not found. Please check the provided id.' });
       }
+
+      const portfoliosToDelete = await Portfolio.findAll({
+        where: { userId },
+      });
+
+      const portfolioIds = portfoliosToDelete.map((portfolio) => portfolio.id);
+
+      const portfolioAssetsToDelete = await PortfolioAsset.findAll({
+        where: { portfolioId: portfolioIds },
+      });
+
+      const portfolioAssetIds = portfolioAssetsToDelete.map((portfolioAsset) => portfolioAsset.id);
+
+      const transactionsToDelete = Transaction.findAll({
+        where: { portfolioAssetId: portfolioAssetIds },
+      });
+
+      await Transaction.destroy({
+        where: { portfolioAssetId: portfolioAssetIds },
+      });
+
+      await PortfolioAsset.destroy({
+        where: { portfolioId: portfolioIds },
+      });
+
+      await Portfolio.destroy({
+        where: { userId },
+      });
+
       await foundUser.destroy();
-      res.status(200).json({ message: 'Profile deleted' });
+
+      return res.status(200).json({
+        message: 'Profile deleted, associated portfolios deleted',
+        portfolioAssetsToDelete,
+        transactionsToDelete,
+      });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
+      return res.status(500).json({ error: 'Internal server error, could not delete profile. Please try again later' });
     }
-    return null;
   },
 };
 
