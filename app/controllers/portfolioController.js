@@ -1,6 +1,7 @@
 import Portfolio from '../models/Portfolio.js';
 import PortfolioAsset from '../models/PortfolioAsset.js';
 import Transaction from '../models/Transaction.js';
+import logger from '../utils/logger.js';
 
 const portfolioController = {
 
@@ -87,7 +88,7 @@ const portfolioController = {
 
       return res.status(200).json({ message: 'Portfolio deleted successfully' });
     } catch (err) {
-      console.log(err);
+      logger.info(err);
       return res.status(500).json({ error: 'Error deleting portfolio' });
     }
   },

@@ -33,7 +33,9 @@
     "pg": "^8.11.3",
     "sequelize": "^6.32.1",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "winston": "^3.10.0",
+    "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
     "eslint": "^8.47.0",
