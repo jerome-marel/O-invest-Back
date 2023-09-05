@@ -19,6 +19,9 @@ router.post('/api/login', authController.login);
 // Routes pour l'accueil
 router.get('/api/users', tokenMiddleware, userController.getProfile);
 
+// ROUTES CRUD USER
+router.delete('/api/users/delete', tokenMiddleware, userController.deleteProfile);
+
 // ALL ASSETS
 router.get('/api/assets', tokenMiddleware, assetController.getAllAssets);
 

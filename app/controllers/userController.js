@@ -41,15 +41,16 @@ const userController = {
   },
 
   deleteProfile: async (req, res) => {
+    const userId = req.user.id;
     try {
-      const foundUser = await User.findByPk(req.params.id);
+      const foundUser = await User.findByPk(userId);
       if (!foundUser) {
         return res.status(404).json({ error: 'User not found. Please check the provided id.' });
       }
       await foundUser.destroy();
       res.status(200).json({ message: 'Profile deleted' });
     } catch (err) {
-      // console.error(err);
+      console.error(err);
       res.status(500).json({ error: 'Internal server error' });
     }
     return null;
