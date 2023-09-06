@@ -7,6 +7,9 @@ import userController from '../controllers/userController.js';
 import { errorHandler } from '../middlewares/error.middleware.js';
 import tokenMiddleware from '../utils/authValidation/tokenMiddleware.js';
 import statController from '../controllers/statController.js';
+import {
+  validateRegister, validateLogin, validatePortfolio, validateAddAsset,
+} from '../validation/validator.middleware.js';
 
 const router = express.Router();
 /**
@@ -15,7 +18,7 @@ const router = express.Router();
  *   get:
  *     description: Root API endpoint, thank you for using oInvest API.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Greeting message.
  */
 router.get('/', (_, res) => {
@@ -25,22 +28,33 @@ router.get('/', (_, res) => {
  * @swagger
  * /api/register:
  *   post:
- *     description: Register a new user
+ *     summary: Register a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
  *     responses:
- *       '200':
- *         description: User registered successfully.
+ *       201:
+ *         description: User successfully registered
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  */
-router.post('/api/register', authController.register);
+router.post('/api/register', validateRegister, authController.register);
 /**
  * @swagger
  * /api/login:
  *   post:
  *     description: Login
  *     responses:
- *       '200':
+ *       '201':
  *         description: User logged successfully.
  */
-router.post('/api/login', authController.login);
+router.post('/api/login', validateLogin, authController.login);
 
 /**
  * @swagger
@@ -48,12 +62,10 @@ router.post('/api/login', authController.login);
  *   get:
  *     description: User infos.
  *     responses:
- *       '200':
+ *       '201':
  *         description: User found in database.
  */
 router.get('/api/users', tokenMiddleware, userController.getProfile);
-
-router.delete('/api/users/delete', tokenMiddleware, userController.deleteProfile);
 
 // ALL ASSETS
 /**
@@ -62,7 +74,7 @@ router.delete('/api/users/delete', tokenMiddleware, userController.deleteProfile
  *   delete:
  *     description: delete a profile, and all concerned portfolios, transactions and assets.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Profile deleted.
  */
 router.delete('/api/users/delete', tokenMiddleware, userController.deleteProfile);
@@ -73,7 +85,7 @@ router.delete('/api/users/delete', tokenMiddleware, userController.deleteProfile
  *   get:
  *     description: Find all assets.
  *     responses:
- *       '200':
+ *       '201':
  *         description: All assets successfully retrieved.
  */
 router.get('/api/assets', tokenMiddleware, assetController.getAllAssets);
@@ -84,27 +96,28 @@ router.get('/api/assets', tokenMiddleware, assetController.getAllAssets);
  *   post:
  *     description: Create a new portfolio.
  *     responses:
- *       '200':
+ *       '201':
  *         description: New portfolio successfully added.
  */
-router.post('/api/portfolios', tokenMiddleware, portfolioController.createPortfolio);
+router.post('/api/portfolios', validatePortfolio, tokenMiddleware, portfolioController.createPortfolio);
 /**
  * @swagger
  * /api/portfolios/:id/addasset:
  *   post:
  *     description: Add asset to portfolio and update transaction history.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Transaction successful - updated in Portfolio and Transaction History.
  */
-router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
+router.post('/api/portfolios/:id/addasset', validateAddAsset, tokenMiddleware, assetController.addAssetToPortfolio);
+
 /**
  * @swagger
  * /api/portfolios:
  *   get:
  *     description: Find all portfolios.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Successfully retrieved all portfolios.
  */
 router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfolios);
@@ -114,17 +127,17 @@ router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfol
  *   put:
  *     description: Update a portfolio.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Portfolio updated successfully.
  */
-router.put('/api/portfolios/:id', tokenMiddleware, portfolioController.updatePortfolio);
+router.put('/api/portfolios/:id', validatePortfolio, tokenMiddleware, portfolioController.updatePortfolio);
 /**
  * @swagger
  * /api/portfolios/:id:
  *   delete:
  *     description: Delete portfolio.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Portfolio deleted successfully, as well as related transactions, and portfolio assets.
  */
 router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.deletePortfolio);
@@ -134,7 +147,7 @@ router.delete('/api/portfolios/:id', tokenMiddleware, portfolioController.delete
  *   delete:
  *     description: on delete un asset, on mets à jour le remaining_quantity dans portfolio_asset, on efface les transactions concernées, et on mets à jour le total_invested dans la table portfolio.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Quantity to remove exceeds the available quantity in the portfolio.
  */
 
@@ -146,7 +159,7 @@ router.delete('/api/portfolios/:id/deleteasset', tokenMiddleware, assetControlle
  *   get:
  *     description: Get stats for all portfolios of a user
  *     responses:
- *       '200':
+ *       '201':
  *         description: All portfolios and their statistics found for a user.
  */
 router.get('/api/stats', tokenMiddleware, statController.allPortfoliosStats);
@@ -156,7 +169,7 @@ router.get('/api/stats', tokenMiddleware, statController.allPortfoliosStats);
  *   get:
  *     description: Get stats for a specific portfolio of a user
  *     responses:
- *       '200':
+ *       '201':
  *         description: Successful response with the specific portfolio stats
  */
 router.get('/api/portfolios/:id', tokenMiddleware, statController.getOnePortfolioStats);
@@ -166,7 +179,7 @@ router.get('/api/portfolios/:id', tokenMiddleware, statController.getOnePortfoli
  *   get:
  *     description: Calculate the top and worst performer portfolios
  *     responses:
- *       '200':
+ *       '201':
  *         description: Found top and worst performer portfolios.
  */
 router.get('/api/stats/ranking', tokenMiddleware, statController.getRanking);
@@ -177,7 +190,7 @@ router.get('/api/stats/ranking', tokenMiddleware, statController.getRanking);
  *   get:
  *     description: Get the average purchase price of a portfolio
  *     responses:
- *       '200':
+ *       '201':
  *         description: Average asset's purchase price calculated successfully
  */
 router.get('/api/portfolios/:id/avg', tokenMiddleware, statController.averagePurchasePrice);
@@ -187,7 +200,7 @@ router.get('/api/portfolios/:id/avg', tokenMiddleware, statController.averagePur
  *   get:
  *     description: Find all portfolios for a user and their valuation.
  *     responses:
- *       '200':
+ *       '201':
  *         description: All portfolios for user and their valuation found.
  */
 
@@ -198,7 +211,7 @@ router.get('/api/stats/portfolios/weight', tokenMiddleware, statController.getPo
  *   get:
  *     description: Calculate Profit&Loss and ROI for each asset.
  *     responses:
- *       '200':
+ *       '201':
  *         description: Found Profit&Loss and ROI for each asset.
  */
 router.get('/api/portfolios/:id/assets/perf', tokenMiddleware, statController.getProfitLossAsset);
