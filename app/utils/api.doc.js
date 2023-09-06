@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // utils/api.doc.js
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -18,9 +19,13 @@ const setupSwagger = (app) => {
       },
       servers: ['http://localhost:3001'],
     },
-    apis: [path.resolve(__dirname, '../router/index.js')],
-  };
 
+    apis: [
+      path.resolve(__dirname, '../router/index.js'),
+    //   path.resolve(__dirname, '../app/errors/api.error.js'),
+    //   path.resolve(__dirname, '../app/models/*.js'),
+    ],
+  };
   const specs = swaggerJsDoc(swaggerOptions);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 };
