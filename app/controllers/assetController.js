@@ -169,7 +169,7 @@ const assetController = {
       }
 
       // eslint-disable-next-line max-len
-      const { assetPrice } = transactionAsset; // You may need to adjust this based on your data model
+      const { assetPrice } = transactionAsset;
       const valueToRemove = parseFloat(quantityToRemove) * parseFloat(assetPrice);
 
       // eslint-disable-next-line max-len
@@ -180,6 +180,12 @@ const assetController = {
       }
 
       await portfolioAsset.update({ remainingQuantity: updatedQuantity });
+
+      if (updatedQuantity === 0) {
+        await Transaction.destroy({ where: { portfolioId, symbol } });
+
+        await portfolioAsset.destroy();
+      }
 
       const updatedTotalInvest = parseFloat(userPortfolio.totalInvested) - valueToRemove;
       await Portfolio.update(
@@ -192,6 +198,7 @@ const assetController = {
         updatedTotalInvest,
       });
     } catch (err) {
+      logger.info(err);
       return res.status(500).json({ error: 'Error updating asset quantity in the portfolio' });
     }
   },

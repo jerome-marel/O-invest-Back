@@ -1,7 +1,7 @@
 import axios from 'axios';
 import '../app/utils/env.load.js';
-import logger from './app/utils/logger.js';
 import pkg from 'pg';
+import logger from '../app/utils/logger.js';
 
 const { Client } = pkg;
 
