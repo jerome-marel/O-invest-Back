@@ -7,6 +7,8 @@ import userController from '../controllers/userController.js';
 import { errorHandler } from '../middlewares/error.middleware.js';
 import tokenMiddleware from '../utils/authValidation/tokenMiddleware.js';
 import statController from '../controllers/statController.js';
+import dashboardController from '../controllers/dashboardController.js';
+
 import {
   validateRegister, validateLogin, validatePortfolio, validateAddAsset,
 } from '../validation/validator.middleware.js';
@@ -215,6 +217,8 @@ router.get('/api/stats/portfolios/weight', tokenMiddleware, statController.getPo
  *         description: Found Profit&Loss and ROI for each asset.
  */
 router.get('/api/portfolios/:id/assets/perf', tokenMiddleware, statController.getProfitLossAsset);
+
+router.get('/api/dashboard', tokenMiddleware, dashboardController.updateStocksHourly);
 
 router.use(errorHandler);
 
