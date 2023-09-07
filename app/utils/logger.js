@@ -3,6 +3,15 @@ import 'winston-daily-rotate-file';
 
 const { combine, timestamp, json } = format;
 
+const appendTimestamp = format((info, opts) => {
+  if (opts.offset) {
+    const date = new Date();
+    date.setHours(date.getHours() + opts.offset);
+    info.timestamp = date.toISOString();
+  }
+  return info;
+});
+
 const logger = createLogger({
   transports: [
     new transports.DailyRotateFile({
@@ -12,6 +21,7 @@ const logger = createLogger({
       frequency: '24h',
       maxFiles: '7d', // Keep logs for 7 days
       format: combine(
+        appendTimestamp({ offset: 2 }),
         timestamp(),
         json(),
       ),
@@ -23,6 +33,7 @@ if (process.env.NODE_ENV !== 'production') {
   logger.add(new transports.Console({
     format: combine(
       format.colorize(),
+      appendTimestamp({ offset: 2 }),
       timestamp(),
       format.simple(),
     ),
