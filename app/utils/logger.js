@@ -4,10 +4,11 @@ import 'winston-daily-rotate-file';
 const { combine, timestamp, json } = format;
 
 const appendTimestamp = format((info, opts) => {
+  const clone = { ...info };
   if (opts.offset) {
     const date = new Date();
     date.setHours(date.getHours() + opts.offset);
-    info.timestamp = date.toISOString();
+    clone.timestamp = date.toISOString();
   }
   return info;
 });
