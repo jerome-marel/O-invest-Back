@@ -18,11 +18,11 @@ PortfolioAsset.init(
       allowNull: false,
     },
     remainingQuantity: {
-      type: DataTypes.FLOAT(9, 2),
+      type: DataTypes.FLOAT,
       allowNull: true,
     },
     historicPrice: {
-      type: DataTypes.FLOAT(7, 2),
+      type: DataTypes.FLOAT,
       allowNull: true,
     },
   },

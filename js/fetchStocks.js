@@ -39,4 +39,4 @@ const fetchAndUpdateStocks = async () => {
   }
 };
 
-export default fetchAndUpdateStocks;
+fetchAndUpdateStocks();

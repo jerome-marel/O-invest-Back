@@ -31,15 +31,15 @@ Transaction.init(
       allowNull: true,
     },
     assetPrice: {
-      type: DataTypes.FLOAT(7, 2),
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     quantity: {
-      type: DataTypes.FLOAT(7, 2),
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     totalTransacted: {
-      type: DataTypes.FLOAT(9, 2),
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     note: {
