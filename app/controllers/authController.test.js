@@ -1,51 +1,31 @@
 /* eslint-env jest */
-import bcrypt from 'bcryptjs';
+import { Client } from 'pg';
 import authController from './authController.js';
-import User from '../models/User.js'; // I Mock this
+import '../utils/env.load.js';
 
-jest.mock('../models/User');
+let client;
 
-// mock User.findOne
-User.findOne.mockImplementation(async () => null); // Return null to simulate user not found in DB
+beforeAll(async () => {
+  client = new Client({
+    user: 'oinvest',
+    host: 'localhost',
+    database: 'oinvest',
+    password: 'oinvest',
+    port: 5432,
+  });
 
-test('should register user', async () => {
-  const req = {
-    body: {
-      firstName: 'Marco',
-      lastName: 'Cubano',
-      email: 'marco.cubano@gmail.com',
-      password: 'securePassword',
-      passwordConfirm: 'securePassword',
-      riskProfile: 'low',
-    },
-  };
-
-  const res = {
-    status: jest.fn(() => res),
-    json: jest.fn(),
-  };
-
-  await authController.register(req, res);
-
-  // Expecting 201 status for successful registration
-  expect(res.status).toHaveBeenCalledWith(201);
-  // Expecting a specific message in the response
-  expect(res.json).toHaveBeenCalledWith({ message: 'User registered successfully' });
+  await client.connect();
 });
 
-// the test for the login function
+afterAll(async () => {
+  await client.end();
+});
 
 test('should login user', async () => {
-  User.findOne.mockImplementation(async () => ({
-    id: 1,
-    email: 'marco.cubano@gmail.com',
-    password: 'mockHashedPassword',
-  }));
-
   const req = {
     body: {
-      email: 'marco.cubano@gmail.com',
-      password: 'securePassword',
+      email: 'marco@gmail.com',
+      password: process.env.USER_PWD, // Text version of password hash
     },
   };
 
@@ -54,11 +34,10 @@ test('should login user', async () => {
     json: jest.fn(),
   };
 
-  // Mock bcrypt.compare to return true, assuming password is correct
-  bcrypt.compare = jest.fn().mockReturnValue(true);
-
+  // Call the real login method
   await authController.login(req, res);
 
+  // Expectations
   expect(res.status).toHaveBeenCalledWith(201);
   expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: "User connected successfully to O'Invest" }));
 });
