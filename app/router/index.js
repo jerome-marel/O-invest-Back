@@ -15,6 +15,12 @@ import tokenMiddleware from '../utils/authValidation/tokenMiddleware.js';
 import statController from '../controllers/statController.js';
 import dashboardController from '../controllers/dashboardController.js';
 
+import {
+  validateRegister, validateLogin, validatePortfolio, validateAddAsset,
+} from '../validation/validator.middleware.js';
+
+
+
 const router = express.Router();
 /**
  * @swagger

@@ -20,9 +20,10 @@ const logger = createLogger({
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
       frequency: '24h',
-      maxFiles: '7d', // Keep logs for 7 days
+      maxFiles: '7d',
       format: combine(
-        appendTimestamp({ offset: 2 }),
+        appendTimestamp({ offset: 2 }), // Offset de 2 heures pour UTC+2
+
         timestamp(),
         json(),
       ),
@@ -34,7 +35,8 @@ if (process.env.NODE_ENV !== 'production') {
   logger.add(new transports.Console({
     format: combine(
       format.colorize(),
-      appendTimestamp({ offset: 2 }),
+      appendTimestamp({ offset: 2 }), // Offset de 2 heures pour UTC+2
+
       timestamp(),
       format.simple(),
     ),

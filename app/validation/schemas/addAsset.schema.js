@@ -5,6 +5,7 @@ const addAssetSchema = Joi.object({
   purchaseDatetime: Joi.date().required(),
   quantity: Joi.number().required(),
   note: Joi.string().allow('').optional(),
+  userId: Joi.number().required(),
 });
 
 export default addAssetSchema;
