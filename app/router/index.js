@@ -14,7 +14,6 @@ import {
   validateRegister, validateLogin, validatePortfolio, validateAddAsset,
 } from '../validation/validator.middleware.js';
 
-
 const router = express.Router();
 /**
  * @swagger
