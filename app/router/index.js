@@ -112,7 +112,7 @@ router.post('/api/portfolios', tokenMiddleware, validatePortfolio, portfolioCont
  *       '201':
  *         description: Transaction successful - updated in Portfolio and Transaction History.
  */
-router.post('/api/portfolios/:id/addasset', validateAddAsset, tokenMiddleware, assetController.addAssetToPortfolio);
+router.post('/api/portfolios/:id/addasset', tokenMiddleware, validateAddAsset, assetController.addAssetToPortfolio);
 
 /**
  * @swagger
@@ -133,7 +133,7 @@ router.get('/api/portfolios', tokenMiddleware, portfolioController.getAllPortfol
  *       '201':
  *         description: Portfolio updated successfully.
  */
-router.put('/api/portfolios/:id', validatePortfolio, tokenMiddleware, portfolioController.updatePortfolio);
+router.put('/api/portfolios/:id', tokenMiddleware, validatePortfolio, portfolioController.updatePortfolio);
 /**
  * @swagger
  * /api/portfolios/:id:
