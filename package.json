@@ -9,8 +9,8 @@
     "db:deploy": "sqitch deploy; node ./js/updateStocks.js",
     "db:reset": "sqitch revert -y; npm run db:deploy; node ./js/userSeeding.js",
     "db:front": "psql -U oinvest -d oinvest",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
-  },
+    "test auth": "npx jest --detectOpenHandles app/controllers/authController.test.js",
+    "test portfolio": "npx jest --detectOpenHandles app/controllers/portfolioController.test.js"  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/O-Clock-Watt/projet-o-invest-back.git"
