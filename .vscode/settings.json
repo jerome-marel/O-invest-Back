@@ -23,25 +23,38 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#dd0531"
-} // {
-//     "workbench.colorCustomizations": {
-//         "activityBar.activeBackground": "#3399ff",
-//         "activityBar.background": "#3399ff",
-//         "activityBar.foreground": "#15202b",
-//         "activityBar.inactiveForeground": "#15202b99",
-//         "activityBarBadge.background": "#bf0060",
-//         "activityBarBadge.foreground": "#e7e7e7",
-//         "commandCenter.border": "#e7e7e799",
-//         "sash.hoverBorder": "#3399ff",
-//         "statusBar.background": "#007fff",
-//         "statusBar.foreground": "#e7e7e7",
-//         "statusBarItem.hoverBackground": "#3399ff",
-//         "statusBarItem.remoteBackground": "#007fff",
-//         "statusBarItem.remoteForeground": "#e7e7e7",
-//         "titleBar.activeBackground": "#007fff",
-//         "titleBar.activeForeground": "#e7e7e7",
-//         "titleBar.inactiveBackground": "#007fff99",
-//         "titleBar.inactiveForeground": "#e7e7e799"
-//     },
-//     "peacock.color": "#007fff"
-// }
+        "comments": "#00000000",
+        "textMateRules": [
+            {
+                "scope": [
+                    "hidecomments",
+                    "comment",
+                    "comment.block",
+                    "comment.line",
+                    "comment.line.double-slash",
+                    "variable.other.jsdoc",
+                    "storage.type.class.jsdoc",
+                    "punctuation.definition.block.tag.jsdoc",
+                    "punctuation.definition.bracket.curly.begin.jsdoc",
+                    "punctuation.definition.bracket.curly.end.jsdoc",
+                    "entity.name.type.instance.jsdoc",
+                    "comment.block.documentation.ts",
+                    "comment.block.documentation.js",
+                    "comment.block.documentation.cs",
+                    "comment.block.documentation.cs entity.other.attribute-name.localname.cs",
+                    "comment.block.documentation.cs entity.other.attribute-name.cs",
+                    "comment.block.documentation.cs punctuation.definition.tag.cs",
+                    "comment.block.documentation.cs punctuation.definition.string.begin.cs",
+                    "comment.block.documentation.cs punctuation.definition.string.end.cs",
+                    "comment.block.documentation.cs punctuation.definition.bracket.curly.begin.cs",
+                    "comment.block.documentation.cs punctuation.definition.bracket.curly.end.cs",
+                    "comment.block.documentation.cs punctuation.definition.block.tag.cs",
+                    "comment.block.documentation.cs string.quoted.double.cs",
+                    "comment.block.documentation.cs entity.name.tag.localname.cs"
+                ],
+                "settings": {
+                    "foreground": "#00000000"
+                }
+            }
+        ]
+    }

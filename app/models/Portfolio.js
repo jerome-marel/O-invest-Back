@@ -20,7 +20,7 @@ Portfolio.init(
     },
     totalInvested: {
       type:
-      DataTypes.FLOAT(9, 2),
+      DataTypes.FLOAT,
       allowNull: true,
     },
   },

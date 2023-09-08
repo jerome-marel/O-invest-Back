@@ -264,9 +264,17 @@ const statController = {
         where: { portfolioId },
       });
 
+      if (!portfolioAssets) {
+        return res.status(401).json({ error: 'Unauthorized action, portfolio not found or does not belong to user' });
+      }
+
       const transactions = await Transaction.findAll({
         where: { portfolioId },
       });
+
+      if (!transactions) {
+        return res.status(401).json({ error: 'Unauthorized action, portfolio not found or does not belong to user' });
+      }
 
       const oneAssetProfitLoss = portfolioAssets.map((asset) => {
         const matchingTransaction = transactions.find(
@@ -291,9 +299,15 @@ const statController = {
         return null;
       }).filter(Boolean);
 
+      const transactionNote = transactions.map((transaction) => ({
+        symbol: transaction.symbol,
+        note: transaction.note,
+      }));
+
       return res.status(200).json({
         message: 'Found Profit&Loss and ROI for each asset.',
         oneAssetProfitLoss,
+        transactionNote,
       });
     } catch (error) {
       return res.status(500).json({ error: 'Internal server error, please try again later' });

@@ -1,5 +1,11 @@
 /* eslint-disable max-len */
 import express from 'express';
+import {
+  validateRegister,
+  validateLogin,
+  validatePortfolio,
+  validateAddAsset,
+} from '../validation/validator.middleware.js';
 import authController from '../controllers/authController.js';
 import assetController from '../controllers/assetController.js';
 import portfolioController from '../controllers/portfolioController.js';
@@ -12,6 +18,8 @@ import dashboardController from '../controllers/dashboardController.js';
 import {
   validateRegister, validateLogin, validatePortfolio, validateAddAsset,
 } from '../validation/validator.middleware.js';
+
+
 
 const router = express.Router();
 /**
@@ -101,7 +109,7 @@ router.get('/api/assets', tokenMiddleware, assetController.getAllAssets);
  *       '201':
  *         description: New portfolio successfully added.
  */
-router.post('/api/portfolios', validatePortfolio, tokenMiddleware, portfolioController.createPortfolio);
+router.post('/api/portfolios', tokenMiddleware, validatePortfolio, portfolioController.createPortfolio);
 /**
  * @swagger
  * /api/portfolios/:id/addasset:

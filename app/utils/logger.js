@@ -23,6 +23,7 @@ const logger = createLogger({
       maxFiles: '7d',
       format: combine(
         appendTimestamp({ offset: 2 }), // Offset de 2 heures pour UTC+2
+
         timestamp(),
         json(),
       ),
@@ -35,6 +36,7 @@ if (process.env.NODE_ENV !== 'production') {
     format: combine(
       format.colorize(),
       appendTimestamp({ offset: 2 }), // Offset de 2 heures pour UTC+2
+
       timestamp(),
       format.simple(),
     ),
