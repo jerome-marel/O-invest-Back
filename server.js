@@ -7,8 +7,6 @@ const PORT = process.env.PORT ?? 3000;
 
 const server = createServer(app);
 
-// eslint-disable-next-line no-console
 server.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  logger.info(`Listening on http://localhost:${PORT}`);// utiliser eventuellement un logger Winston?
+  logger.info(`Listening on http://localhost:${PORT}`);
 });

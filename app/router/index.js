@@ -220,7 +220,7 @@ router.get('/api/stats/portfolios/weight', tokenMiddleware, statController.getPo
  */
 router.get('/api/portfolios/:id/assets/perf', tokenMiddleware, statController.getProfitLossAsset);
 
-router.get('/api/dashboard', tokenMiddleware, dashboardController.updateStocksHourly);
+router.get('/dashboard', tokenMiddleware, dashboardController.updateStocksHourly);
 
 router.use(errorHandler);
 

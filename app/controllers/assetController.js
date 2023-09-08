@@ -1,3 +1,4 @@
+// Imports
 import axios from 'axios';
 import AssetList from '../models/AssetList.js';
 import Portfolio from '../models/Portfolio.js';
@@ -6,10 +7,12 @@ import Transaction from '../models/Transaction.js';
 import logger from '../utils/logger.js';
 
 const assetController = {
+  // method to get all assets and seed the databse with fetchStocks.js
   getAllAssets: async (req, res) => {
     try {
       const allAssets = await AssetList.findAll();
       const cleanedAssets = allAssets.map((asset) => ({
+        // limit the data to what we need (excluding date founded, headcorters...)
         id: asset.dataValues.id,
         symbol: asset.dataValues.symbol,
         name: asset.dataValues.name,
@@ -129,10 +132,19 @@ const assetController = {
       const portfolioAssetId = newPortfolioAsset.id;
       await newTransaction.update({ portfolioAssetId });
 
+      const avgPurchasePrice = newTransaction.assetPrice;
+      // eslint-disable-next-line max-len
+      const assetProfitLoss = (newPortfolioAsset.historicPrice - newTransaction.assetPrice) * newPortfolioAsset.remainingQuantity;
+      // eslint-disable-next-line max-len
+      const assetROIPercent = ((newPortfolioAsset.historicPrice - newTransaction.assetPrice) / newTransaction.assetPrice) * 100;
+
       return res.status(201).json({
         message: 'Transaction successful - updated in Portfolio and Transaction History',
         newTransaction,
         newPortfolioAsset,
+        assetProfitLoss,
+        assetROIPercent,
+        avgPurchasePrice,
       });
     } catch (err) {
       return res.status(500).json({ error: 'Error retrieving portfolio' });
