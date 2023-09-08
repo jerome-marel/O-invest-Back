@@ -11,7 +11,7 @@ import statController from '../controllers/statController.js';
 import dashboardController from '../controllers/dashboardController.js';
 
 import {
-  validateRegister, validateLogin, validatePortfolio, validateAddAsset,
+  validateRegister, validateLogin, validatePortfolio,
 } from '../validation/validator.middleware.js';
 
 const router = express.Router();
@@ -112,7 +112,7 @@ router.post('/api/portfolios', tokenMiddleware, validatePortfolio, portfolioCont
  *       '201':
  *         description: Transaction successful - updated in Portfolio and Transaction History.
  */
-router.post('/api/portfolios/:id/addasset', tokenMiddleware, validateAddAsset, assetController.addAssetToPortfolio);
+router.post('/api/portfolios/:id/addasset', tokenMiddleware, assetController.addAssetToPortfolio);
 
 /**
  * @swagger
